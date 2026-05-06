@@ -20,9 +20,9 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-image: url('/fondo-header.png');
+    background-image: url('/fondo-header10.png');
     background-size: cover;
-    background-position: center 5%;
+    background-position: center;
     padding: 0.8rem 1rem;
 }
 
@@ -536,4 +536,115 @@ h1 {
 
 .btn-continuar:active {
     opacity: 0.7;
+}
+
+.btn-cancelar {
+    background-color: #dc2626;
+    color: #ffffff;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+    max-width: 350px;
+    align-self: center;
+    transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+    background-color: #b91c1c;
+}
+
+.btn-cancelar:active {
+    opacity: 0.7;
+}
+
+/* Dark Mode Button Styles */
+.btn-dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #555555;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.btn-dark-mode:hover {
+    background-color: #555555;
+}
+
+/* Dark Mode Global Overrides */
+html.dark, html.dark body {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+html.dark .titulo,
+html.dark .vs,
+html.dark .selecciones,
+html.dark .estadio,
+html.dark .label-sector,
+html.dark .label-precio,
+html.dark .precio,
+html.dark .label-cantidad,
+html.dark .cantidad-numero,
+html.dark .referencia-box p,
+html.dark .login-titulo {
+    color: #ffffff;
+}
+
+html.dark .parte-arriba {
+    background-color: #1a1a1a;
+    border: 1px solid #333333;
+    border-bottom: none;
+}
+
+html.dark .parte-abajo {
+    border: 1px solid #333333;
+    background-color: #1e1e1e;
+}
+
+html.dark .linea-divisora {
+    border-bottom: 2px solid #555555;
+}
+
+html.dark .login-card {
+    background-color: #1e1e1e;
+}
+
+html.dark .input {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+html.dark .btn-cantidad {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+html.dark .btn-cantidad:active {
+    background-color: #555555;
+}
+
+html.dark .selector-sector {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+html.dark .cantidad-container {
+    border: 2px solid #555555;
+}
+
+html.dark .main-compra,
+html.dark .login-main {
+    background-color: #121212;
 }

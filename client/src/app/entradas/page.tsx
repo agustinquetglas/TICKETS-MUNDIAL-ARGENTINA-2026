@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { createClient } from '../../utils/supabase/client';
+import DarkModeToggle from '../../components/DarkModeToggle';
 
 type Sector = 'vip' | 'platea-baja' | 'platea-alta' | 'popular';
 
@@ -91,6 +92,9 @@ export default function PaginaCompra() {
 
   return (
     <main className="main-compra">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
+        <DarkModeToggle />
+      </div>
       <h2 className="titulo">SELECCIONÁ TUS ENTRADAS</h2>
 
       <div className="compra-container">
@@ -185,6 +189,15 @@ export default function PaginaCompra() {
 
         <button type="button" className="btn-continuar" onClick={onClickComprar} disabled={loading}>
           {loading ? 'PROCESANDO...' : 'CONTINUAR →'}
+        </button>
+
+        <button 
+          type="button" 
+          className="btn-cancelar"
+          onClick={() => router.back()} 
+          disabled={loading}
+        >
+          CANCELAR
         </button>
       </div>
     </main>
