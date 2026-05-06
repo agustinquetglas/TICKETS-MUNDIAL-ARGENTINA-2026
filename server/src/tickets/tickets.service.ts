@@ -2,6 +2,7 @@ import { Injectable, BadRequestException, InternalServerErrorException } from '@
 import { PartidosRepository } from '../partidos/partidos.repository';
 import { PedidosRepository } from './pedidos.repository';
 import { TicketsRepository } from './tickets.repository';
+import { SectorRepository } from '../sector/sector.repository';
 import { MercadoPagoStrategy } from '../payments/MercadoPagoStrategy';
 import { PaymentProcessor } from '../payments/PaymentProcessor';
 
@@ -11,9 +12,10 @@ export class TicketsService {
         private readonly partidosRepo: PartidosRepository,
         private readonly pedidosRepo: PedidosRepository,
         private readonly ticketsRepo: TicketsRepository,
+        private readonly sectorRepo: SectorRepository,
     ) { }
 
-    async procesarCompra(partidoId: number, usuarioId: string, cantidadAComprar: number, sector: string) {
+    async procesarCompra(partidoId: number, usuarioId: string, cantidadAComprar: number, sectorId: string) {
 
         if (cantidadAComprar < 1 || cantidadAComprar > 6) {
             throw new BadRequestException('Error: Solo se pueden adquirir entre 1 y 6 entradas por pedido.');
@@ -24,11 +26,20 @@ export class TicketsService {
             throw new BadRequestException('El partido seleccionado no se encuentra disponible.');
         }
 
-        if (cantidadAComprar > partido.stock_disponible) {
-            throw new BadRequestException(`Stock insuficiente. Solo quedan ${partido.stock_disponible} entradas disponibles.`);
+        const sector = await this.sectorRepo.obtenerPorId(sectorId);
+        if (!sector) {
+            throw new BadRequestException('El sector seleccionado no existe.');
         }
 
-        const montoTotal = partido.precio_base * cantidadAComprar;
+        if (sector.partido_id !== partidoId) {
+            throw new BadRequestException('El sector no pertenece al partido indicado.');
+        }
+
+        if (cantidadAComprar > sector.Stock) {
+            throw new BadRequestException(`Stock insuficiente. Solo quedan ${sector.Stock} entradas disponibles en ese sector.`);
+        }
+
+        const montoTotal = sector.precio_sector * cantidadAComprar;
 
         try {
             const nuevoPedido = await this.pedidosRepo.crearPedido({
@@ -44,21 +55,22 @@ export class TicketsService {
                 ticketsAGenerar.push({
                     pedido_id: nuevoPedido.id,
                     partido_id: partido.id,
-                    sector: sector
+                    sector_id: sector.id,
+                    vendido: false
                 });
             }
 
             await this.ticketsRepo.crearMultiplesTickets(ticketsAGenerar);
 
-            const nuevoStock = partido.stock_disponible - cantidadAComprar;
-            await this.partidosRepo.actualizarStock(partido.id, nuevoStock);
+            const nuevoStock = sector.Stock - cantidadAComprar;
+            await this.sectorRepo.actualizarStock(sector.id, nuevoStock);
 
             const mpStrategy = new MercadoPagoStrategy();
             const processor = new PaymentProcessor(mpStrategy);
             const urlPago = await processor.processTicketPayment({
                 productoId: String(partido.id),
                 cantidad: cantidadAComprar,
-                precio: partido.precio_base
+                precio: sector.precio_sector
             });
 
             return {
