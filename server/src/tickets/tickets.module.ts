@@ -4,9 +4,10 @@ import { TicketsService } from './tickets.service';
 import { PedidosRepository } from './pedidos.repository';
 import { TicketsRepository } from './tickets.repository';
 import { PartidosModule } from '../partidos/partidos.module';
+import { SectorModule } from '../sector/sector.module';
 
 @Module({
-    imports: [PartidosModule],
+    imports: [PartidosModule, SectorModule],
     controllers: [TicketsController],
     providers: [TicketsService, PedidosRepository, TicketsRepository]
 })
