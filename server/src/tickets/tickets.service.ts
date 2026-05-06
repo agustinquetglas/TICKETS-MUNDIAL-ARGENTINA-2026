@@ -68,6 +68,7 @@ export class TicketsService {
             const mpStrategy = new MercadoPagoStrategy();
             const processor = new PaymentProcessor(mpStrategy);
             const urlPago = await processor.processTicketPayment({
+                compraId: nuevoPedido.id,
                 productoId: String(partido.id),
                 cantidad: cantidadAComprar,
                 precio: sector.precio_sector
