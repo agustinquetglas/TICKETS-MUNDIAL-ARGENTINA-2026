@@ -17,6 +17,11 @@ export class MercadoPagoStrategy implements PaymentStrategy {
                             unit_price: Number(ticketData.precio || ticketData.unit_price) || 50000
                         }
                     ],
+
+                    external_reference: String(ticketData.compraId),
+                    notification_url: `${process.env.BACKEND_URL}/tickets/webhook/mercadopago`,
+
+
                     back_urls: { // <--- Ahora está ADENTRO del body
                         success: "http://localhost:3000/pago-exitoso",
                         failure: "http://localhost:3000/pago-fallido",
