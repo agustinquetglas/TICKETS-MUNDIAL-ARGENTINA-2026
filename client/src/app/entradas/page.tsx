@@ -64,26 +64,34 @@ export default function PaginaCompra() {
       return;
     }
 
-    const tickets: TicketRow[] = Array.from({ length: cantidad }, () => ({
-      partido_id: partidoId,
-      usuario_id: user.id,
-      sector,
-      estado: 'reservado',
-    }));
+    const response = await fetch('http://localhost:3001/tickets/comprar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        partidoId,
+        usuarioId: user.id,
+        cantidad,
+        sectorId: sector,
+      }),
+    });
 
-    const { error: insertError } = await supabase.from('Tickets').insert(tickets);
+    const result = await response.json();
 
-    if (insertError) {
-      setError(`Error al comprar: ${insertError.message}`);
+    if (!response.ok) {
+      setError(result.message || 'Error al procesar la compra');
       setLoading(false);
       return;
     }
 
-    const total = precios[sector] * cantidad;
-    const sectorPretty = sector.replace(/-/g, ' ');
+    if (!result.urlPago) {
+      setError('No se recibió la URL de pago.');
+      setLoading(false);
+      return;
+    }
 
-    setMensaje(`Compraste ${cantidad} entrada(s) en ${sectorPretty} por USD ${total}. ¡Nos vemos en el Mundial!`);
-    setLoading(false);
+    window.location.href = result.urlPago;
   };
 
   const onClickComprar = () => {
