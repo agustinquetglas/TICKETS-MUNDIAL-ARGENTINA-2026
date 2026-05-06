@@ -14,7 +14,7 @@ export class TicketsController {
             body.partidoId,
             body.usuarioId,
             body.cantidad,
-            body.sector
+            body.sectorId
         );
     }
 
