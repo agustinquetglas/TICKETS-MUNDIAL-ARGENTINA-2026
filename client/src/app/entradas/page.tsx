@@ -8,12 +8,7 @@ import DarkModeToggle from '../../components/DarkModeToggle';
 
 type Sector = 'vip' | 'platea-baja' | 'platea-alta' | 'popular';
 
-type TicketRow = {
-  partido_id: number;
-  usuario_id: string;
-  sector: Sector;
-  estado: 'reservado';
-};
+
 
 export default function PaginaCompra() {
   const [sector, setSector] = useState<Sector>('platea-baja');
