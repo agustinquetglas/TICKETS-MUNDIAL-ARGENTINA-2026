@@ -34,10 +34,13 @@ export default function PaginaCompra() {
   );
 
   const handleComprar = async (): Promise<void> => {
+    console.log('CLICK EN COMPRAR');
+
     setLoading(true);
     setError('');
     setMensaje('');
 
+    /*
     const { data, error: userError } = await supabase.auth.getUser();
     if (userError) {
       setError(`Error de autenticación: ${userError.message}`);
@@ -51,6 +54,7 @@ export default function PaginaCompra() {
       router.push('/login');
       return;
     }
+    */
 
     const partidoId = partidoIdStr ? Number(partidoIdStr) : NaN;
     if (!Number.isFinite(partidoId)) {
@@ -66,9 +70,9 @@ export default function PaginaCompra() {
       },
       body: JSON.stringify({
         partidoId,
-        usuarioId: user.id,
+        usuarioId: '5ec9c319-29a5-4c6b-8b38-3348ba32a55a',
         cantidad,
-        sectorId: sector,
+        sectorId: '6579ba3a-6591-41fb-b95c-5dea11a2a2dc',
       }),
     });
 
