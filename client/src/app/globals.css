@@ -1,5 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
 
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-border: #000000;
+    --card-bg: #ffffff;
+    --login-bg: #f0f2f5;
+    --input-bg: #ffffff;
+    --input-border: #d1d5db;
+    --input-text: #000000;
+    --btn-primary-bg: #000000;
+    --btn-primary-text: #ffffff;
+    --header-btn-bg: #ffffff;
+    --header-btn-text: #000000;
+}
+
+.dark {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --card-border: #334155;
+    --card-bg: #1e293b;
+    --login-bg: #020617;
+    --input-bg: #1e293b;
+    --input-border: #475569;
+    --input-text: #ffffff;
+    --btn-primary-bg: #ffffff;
+    --btn-primary-text: #000000;
+    --header-btn-bg: rgba(255, 255, 255, 0.1);
+    --header-btn-text: #ffffff;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,36 +41,68 @@ html,
 body {
     overflow-x: hidden;
     width: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-
-
 
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-image: url('/fondo-header10.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/fondo-header1.png);
     background-size: cover;
     background-position: center;
-    padding: 0.8rem 1rem;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.btn-dark-mode {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-dark-mode:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(10deg);
+}
+
+
+
+
+
+
 .btn-header-login {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
+    background-color: var(--header-btn-bg);
+    color: var(--header-btn-text);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
     margin-left: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
 }
 
 .btn-header-login:hover {
-    background-color: #dddddd;
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
 }
 
 .logo-mundial {
@@ -124,8 +186,9 @@ h1 {
     align-items: center;
     width: 100%;
     max-width: 500px;
-    border: 1px solid #000000;
+    border: 1px solid var(--card-border);
     border-top: none;
+    background-color: var(--card-bg);
 }
 
 
@@ -176,24 +239,26 @@ h1 {
 
 .linea-divisora {
     width: 85%;
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid var(--card-border);
 }
 
 
 .comprar {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
     padding: 0.6rem 1.5rem;
-    border: 2px solid #ffffff;
+    border: 2px solid var(--btn-primary-text);
     border-radius: 0.5rem;
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
     margin: 1.5rem;
+    transition: all 0.2s ease;
 }
 
-.comprar:active {
-    opacity: 0.7;
+.comprar:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
 
 /* ========== LOGIN PAGE ========== */
@@ -203,19 +268,21 @@ h1 {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f2f5;
+    background-color: var(--login-bg);
     padding: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .login-card {
     display: flex;
     flex-direction: row;
-    background-color: #ffffff;
+    background-color: var(--card-bg);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     max-width: 900px;
     width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 /* Mitad Izquierda (Logo) */
@@ -276,23 +343,26 @@ h1 {
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 25px;
-    color: #000;
+    color: var(--text-color);
 }
 
 
 .input {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
     border-radius: 6px;
     font-size: 14px;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .input:focus {
     border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -397,7 +467,9 @@ h1 {
 
 .selector-sector {
     padding: 0.5rem;
-    border: 2px solid #2e2d2d;
+    border: 2px solid var(--card-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
     border-radius: 4px;
     font-size: 1rem;
     width: 100%;
@@ -439,7 +511,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     margin-top: 0.5rem;
-    border: 2px solid #2e2d2d;
+    border: 2px solid var(--card-border);
     width: fit-content;
 }
 
@@ -448,8 +520,8 @@ h1 {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     border: none;
     border-radius: 0;
 }
@@ -560,91 +632,4 @@ h1 {
 
 .btn-cancelar:active {
     opacity: 0.7;
-}
-
-/* Dark Mode Button Styles */
-.btn-dark-mode {
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #555555;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    margin-right: 1rem;
-}
-
-.btn-dark-mode:hover {
-    background-color: #555555;
-}
-
-/* Dark Mode Global Overrides */
-html.dark, html.dark body {
-    background-color: #121212;
-    color: #ffffff;
-}
-
-html.dark .titulo,
-html.dark .vs,
-html.dark .selecciones,
-html.dark .estadio,
-html.dark .label-sector,
-html.dark .label-precio,
-html.dark .precio,
-html.dark .label-cantidad,
-html.dark .cantidad-numero,
-html.dark .referencia-box p,
-html.dark .login-titulo {
-    color: #ffffff;
-}
-
-html.dark .parte-arriba {
-    background-color: #1a1a1a;
-    border: 1px solid #333333;
-    border-bottom: none;
-}
-
-html.dark .parte-abajo {
-    border: 1px solid #333333;
-    background-color: #1e1e1e;
-}
-
-html.dark .linea-divisora {
-    border-bottom: 2px solid #555555;
-}
-
-html.dark .login-card {
-    background-color: #1e1e1e;
-}
-
-html.dark .input {
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #555555;
-}
-
-html.dark .btn-cantidad {
-    background-color: #333333;
-    color: #ffffff;
-}
-
-html.dark .btn-cantidad:active {
-    background-color: #555555;
-}
-
-html.dark .selector-sector {
-    background-color: #333333;
-    color: #ffffff;
-    border: 1px solid #555555;
-}
-
-html.dark .cantidad-container {
-    border: 2px solid #555555;
-}
-
-html.dark .main-compra,
-html.dark .login-main {
-    background-color: #121212;
 }

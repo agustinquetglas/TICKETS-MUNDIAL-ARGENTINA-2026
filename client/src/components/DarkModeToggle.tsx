@@ -32,7 +32,7 @@ export default function DarkModeToggle() {
       className="btn-dark-mode"
       aria-label="Cambiar modo oscuro"
     >
-      {isDark ? '☀️ Claro' : '🌙 Oscuro'}
+      {isDark ? '☀️' : '🌙'}
     </button>
   );
 }
