@@ -34,7 +34,6 @@ export class UsuariosService {
             options: {
                 data: { 
                     full_name: dto.full_name,
-                    last_name: dto.last_name,
                     document: dto.document,
                     phone: dto.phone,
                     province: dto.province,

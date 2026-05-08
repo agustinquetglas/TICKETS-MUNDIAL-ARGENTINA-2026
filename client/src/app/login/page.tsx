@@ -14,7 +14,6 @@ export default function PaginaLogin() {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
-  const [lastName, setLastName] = useState('');
   const [document, setDocument] = useState('');
   const [phone, setPhone] = useState('');
   const [province, setProvince] = useState('');
@@ -55,7 +54,6 @@ export default function PaginaLogin() {
     setName('');
     setMensaje('');
     setError('');
-    setLastName('');
     setDocument('');
     setPhone('');
     setProvince('');
@@ -94,7 +92,6 @@ export default function PaginaLogin() {
         email,
         password,
         full_name: name,
-        last_name: lastName,
         document,
         phone,
         province,

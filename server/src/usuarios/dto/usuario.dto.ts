@@ -23,10 +23,6 @@ export class RegisterDto {
     password: string;
 
     @IsString()
-    @MinLength(2, { message: 'El apellido debe tener al menos 2 caracteres.' })
-    last_name: string;
-
-    @IsString()
     @MinLength(7, { message: 'El documento debe tener al menos 7 caracteres.' })
     document: string;
 
