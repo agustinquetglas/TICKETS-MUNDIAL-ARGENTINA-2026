@@ -2,15 +2,19 @@ import { PedidoContext, PedidoState } from './states/pedido-state.interface';
 import { PendienteState } from './states/pendiente.state';
 
 export class Ticket implements PedidoContext {
-  // Aca tendrian que ir las propiedades de tu base de datos para el ticket, por ejemplo:
-  // id: string;
-  // usuarioId: string;
-  // precio: number;
-
+  public id?: string;
+  public pedidoId: string;
+  public partidoId: number;
+  public sectorId: string;
+  public vendido: boolean = false;
+  
   // estado actual en memoria
   private state: PedidoState;
 
-  constructor() {
+  constructor(pedidoId: string, partidoId: number, sectorId: string) {
+    this.pedidoId = pedidoId;
+    this.partidoId = partidoId;
+    this.sectorId = sectorId;
     // todo ticket nuevo arranca por defecto en estado PENDIENTE
     this.state = new PendienteState();
   }
