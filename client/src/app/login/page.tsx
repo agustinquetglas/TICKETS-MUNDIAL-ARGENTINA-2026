@@ -90,9 +90,9 @@ export default function PaginaLogin() {
     const res = await fetch('http://localhost:3001/usuarios/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        email, 
-        password, 
+      body: JSON.stringify({
+        email,
+        password,
         full_name: name,
         last_name: lastName,
         document,
@@ -259,16 +259,6 @@ export default function PaginaLogin() {
                 className="input"
                 required
                 autoComplete="new-password"
-              />
-              <input
-                type="text"
-                placeholder="Apellido"
-                value={lastName}
-                onChange={(e) => {
-                  setLastName(e.target.value);
-                }}
-                className="input"
-                required
               />
               <input
                 type="text"
