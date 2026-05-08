@@ -32,7 +32,14 @@ export class UsuariosService {
             email: dto.email,
             password: dto.password,
             options: {
-                data: { full_name: dto.full_name }
+                data: { 
+                    full_name: dto.full_name,
+                    last_name: dto.last_name,
+                    document: dto.document,
+                    phone: dto.phone,
+                    province: dto.province,
+                    locality: dto.locality
+                }
             },
         });
 

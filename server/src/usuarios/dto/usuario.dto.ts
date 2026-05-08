@@ -21,6 +21,24 @@ export class RegisterDto {
     @MinLength(6, { message: 'La contraseña debe tener al menos 6 caracteres.' })
     @Matches(/[A-Z]/, { message: 'La contraseña debe tener al menos una mayúscula.' })
     password: string;
+
+    @IsString()
+    @MinLength(2, { message: 'El apellido debe tener al menos 2 caracteres.' })
+    last_name: string;
+
+    @IsString()
+    @MinLength(7, { message: 'El documento debe tener al menos 7 caracteres.' })
+    document: string;
+
+    @IsString()
+    @MinLength(8, { message: 'El teléfono debe tener al menos 8 caracteres.' })
+    phone: string;
+
+    @IsString()
+    province: string;
+
+    @IsString()
+    locality: string;
 }
 
 export class ForgotPasswordDto {
