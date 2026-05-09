@@ -113,104 +113,75 @@ export default function Page() {
             const { dia, numero, hora } = formatearFecha(partido.fecha);
             return (
               <div key={partido.id} className="flex flex-col mb-4">
-                {/* 1. Encabezado de Fecha (Estilo Calendario Compacto) */}
-                <div
-                  className="flex justify-between items-start px-2 mb-2 border-b border-gray-800/50 pb-2"
-                  style={{
-                    fontFamily:
-                      'var(--font-space-grotesk), "Space Grotesk", sans-serif',
-                  }}
+               
+                {/* 1. Encabezado: Fecha, Hora y Fase ) */}
+                <div 
+                  className="flex items-center justify-between border-b border-gray-700 p-4 text-white" 
+                  style={{ fontFamily: 'var(--font-space-grotesk), sans-serif' }}
                 >
-                  <div className="flex gap-6">
-                    {/* Bloque Número y Mes */}
-                    <div className="flex flex-col items-center justify-center border-r border-gray-800 pr-6">
-                      <span className="text-2xl font-bold text-white leading-none">
-                        {numero}
-                      </span>
-                      {/* Como tu función no devuelve el mes, puse JUN (Junio) fijo por el Mundial. Lo podés cambiar */}
-                      <span className="text-[10px] text-gray-500 font-bold uppercase mt-1 tracking-widest">
-                        JUN
-                      </span>
-                    </div>
-
-                    {/* Bloque Día y Hora */}
-                    <div className="flex flex-col justify-center">
-                      <span className="text-sm font-bold text-gray-300 uppercase tracking-wider">
-                        {dia}
-                      </span>
-                      <span className="text-xs text-gray-500 font-mono mt-0.5">
-                        {hora} hs
-                      </span>
-                    </div>
+                  {/* Izquierda: 16 JUN */}
+                  <div className="flex flex-col items-center  w-24 shrink-0">
+                    <span className="text-2xl font-bold leading-none">{numero}</span>
+                    <span className="text-[12px] text-gray-500 font-black tracking-widest mt-1">JUN</span>
                   </div>
 
-                  {/* Etiqueta Fase */}
-                  <span className="text-xs font-bold text-gray-600 tracking-widest mt-1">
-                    [ FASE DE GRUPOS ]
-                  </span>
+                  {/* Centro: MARTES 10:00 PM */}
+                  <div className="flex flex-col items-start pl-10 flex-grow">
+                    <span className="text-sm font-bold uppercase tracking-tight">{dia}</span>
+                    <span className="text-xs text-gray-400 font-mono">{hora} P.M.</span>
+                  </div>
+
+
+                  {/*  [ FASE DE GRUPOS ] */}
+                  <div className="pl-4">
+                    <span className="text-sm font-black text-white tracking-[0.2em] uppercase">
+                      [ FASE DE GRUPOS ]
+                    </span>
+                  </div>
                 </div>
 
-                {/* 2. Tarjeta Azul (Sin la fecha adentro) */}
-                <div className="bg-[#1a2233] border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:border-gray-500 transition-all shadow-lg">
-                  {/* Fila superior: Sede con ícono de ubicación */}
-                  <div className="flex justify-start items-center mb-5 border-b border-gray-700/50 pb-3">
-                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wide flex items-center gap-2">
-                      <span className="text-red-400 text-sm">📍</span>
-                      {getEstadio(partido.equipo_a, partido.equipo_b)}
-                    </span>
-                  </div>
+                {/* 2. Tarjeta Azul (Bordes rectos y etiqueta en el techo) */}
+                <div className="bg-[#1a2233] border border-gray-700 rounded-none flex flex-col transition-all shadow-lg overflow-hidden">
 
-                  {/* Fila central: Banderas y VS */}
-                  <div className="flex justify-between items-center mb-6">
-                    <div className="flex flex-col items-center gap-2 w-1/3">
-                      <img
-                        className="w-16 h-10 object-cover rounded shadow-sm border border-gray-700"
-                        src={getLogo(partido.equipo_a)}
-                        alt={partido.equipo_a}
-                      />
-                      <span className="font-bold text-sm text-center text-white uppercase">
-                        {partido.equipo_a}
+                  <div className="p-5 pt-2 flex flex-col justify-between h-full">
+                    {/* Fila superior: Sede con ícono */}
+                    <div className="flex justify-center items-center mb-5 border-b border-gray-700/50 pb-3">
+                      <span className="text-base font-bold text-white-400 uppercase tracking-wide flex items-center gap-2">
+                        <span className="text-red-400 text-sm">📍</span> 
+                        {getEstadio(partido.equipo_a, partido.equipo_b)}
                       </span>
                     </div>
 
-                    <div className="w-1/3 text-center">
-                      <span className="text-gray-500 font-black text-sm">
-                        VS
-                      </span>
+                    {/* Fila central: Banderas y VS */}
+                    <div className="flex justify-between items-center mb-6">
+                      <div className="flex flex-col items-center gap-2 w-1/3">
+                        <img className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700" src={getLogo(partido.equipo_a)} alt={partido.equipo_a} />
+                        <span className="font-bold text-sm text-center text-white uppercase">{partido.equipo_a}</span>
+                      </div>
+
+                      <div className="w-1/3 text-center">
+                        <span className="text-white font-black text-sm">VS</span>
+                      </div>
+
+                      <div className="flex flex-col items-center gap-2 w-1/3">
+                        <img className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700" src={getLogo(partido.equipo_b)} alt={partido.equipo_b} />
+                        <span className="font-bold text-sm text-center text-white uppercase">{partido.equipo_b}</span>
+                      </div>
                     </div>
 
-                    <div className="flex flex-col items-center gap-2 w-1/3">
-                      <img
-                        className="w-16 h-10 object-cover rounded shadow-sm border border-gray-700"
-                        src={getLogo(partido.equipo_b)}
-                        alt={partido.equipo_b}
-                      />
-                      <span className="font-bold text-sm text-center text-white uppercase">
-                        {partido.equipo_b}
-                      </span>
+                    {/* Precio y Botón  */}
+                    <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-none">
+                      <span className="text-xs text-gray-400 uppercase tracking-wide">Precio desde</span>
+                      <span className="text-2xl font-black text-green-400">USD {partido.precio_base}</span>
                     </div>
-                  </div>
 
-                  {/* Precio */}
-                  <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-lg">
-                    <span className="text-xs text-gray-400 uppercase tracking-wide">
-                      Precio desde
-                    </span>
-                    <span className="text-2xl font-black text-green-400">
-                      USD {partido.precio_base}
-                    </span>
-                  </div>
-
-                  {/* Botón Comprar */}
-                  <div className="flex justify-center mt-2">
-                    <Link
-                      href={`/entradas?partido_id=${partido.id}`}
-                      className="w-[85%]"
-                    >
-                      <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-lg transition-all active:scale-[0.98] shadow-md">
-                        COMPRAR ENTRADA
-                      </button>
-                    </Link>
+                    <div className="flex justify-center mt-2">
+                      <Link href={`/entradas?partido_id=${partido.id}`} className="w-[85%]">
+                        <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-none transition-all active:scale-[0.98] shadow-md">
+                          CONSEGUÍ TU ENTRADA
+                        </button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
