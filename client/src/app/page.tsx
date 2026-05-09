@@ -93,8 +93,18 @@ export default function Page() {
         <UserMenu />
       </header>
 
-      <main>
-        <h2 className="titulo !mt-[10px] !mb-[20px]">PARTIDOS DISPONIBLES</h2>
+      <main style={{ paddingBottom: '4rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', paddingTop: '2rem', paddingBottom: '1rem' }}>
+
+        <h2 style={{ marginTop: '1.5rem', marginBottom: '0.4rem' }} className="text-2xl font-bold text-white tracking-widest uppercase">
+          Partidos Disponibles
+        </h2>
+
+        <span style={{ marginBottom: '1.5rem' }} className="text-sm font-black text-gray-400 tracking-[0.2em] uppercase">
+          [ Fase de Grupos ]
+        </span>
+
+      </div>
 
         {loading && (
           <p style={{ textAlign: "center", padding: "2rem" }}>
@@ -108,55 +118,71 @@ export default function Page() {
           </p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 max-w-2xl mx-auto px-6 md:px-20 justify-items-center">
           {partidos.map((partido) => {
             const { dia, numero, hora } = formatearFecha(partido.fecha);
             return (
-              <div key={partido.id} className="flex flex-col mb-4">
-               
-                {/* 1. Encabezado: Fecha, Hora y Fase ) */}
-                <div 
-                  className="flex items-center justify-between border-b border-gray-700 p-4 text-white" 
-                  style={{ fontFamily: 'var(--font-space-grotesk), sans-serif' }}
+              <div
+                key={partido.id}
+                className="flex flex-col mb-10 max-w-md mx-auto w-[92%]"
+              >
+                {/* Encabezado: Fecha, Hora y Logo */}
+                <div
+                  className="flex items-center justify-between border-b border-gray-700 py-12 px-8 text-white bg-black"
+                  style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
                 >
                   {/* Izquierda: 16 JUN */}
-                  <div className="flex flex-col items-center  w-24 shrink-0">
-                    <span className="text-2xl font-bold leading-none">{numero}</span>
-                    <span className="text-[12px] text-gray-500 font-black tracking-widest mt-1">JUN</span>
+                  <div className="flex flex-col items-center w-24 shrink-0">
+                    <span className="text-2xl font-bold leading-none">
+                      {numero}
+                    </span>
+                    <span className="text-[12px] text-gray-500 font-black tracking-widest mt-1">
+                      JUN
+                    </span>
                   </div>
 
                   {/* Centro: MARTES 10:00 PM */}
                   <div className="flex flex-col items-start pl-10 flex-grow">
-                    <span className="text-sm font-bold uppercase tracking-tight">{dia}</span>
-                    <span className="text-xs text-gray-400 font-mono">{hora} P.M.</span>
+                    <span className="text-sm font-bold uppercase tracking-tight">
+                      {dia}
+                    </span>
+                    <span className="text-xs text-gray-400 font-mono">
+                      {hora} P.M.
+                    </span>
                   </div>
 
-
-                  {/*  [ FASE DE GRUPOS ] */}
-                  <div className="pl-4">
-                    <span className="text-sm font-black text-white tracking-[0.2em] uppercase">
-                      [ FASE DE GRUPOS ]
-                    </span>
+                  {/* Derecha: Logo del Mundial */}
+                  <div className="pl-4 flex items-center justify-center">
+                    <img
+                      src="/Logo-Copa-Mundial.png"
+                      alt="Logo Mundial 2026"
+                      className="h-16 w-auto object-contain drop-shadow-md"
+                    />
                   </div>
                 </div>
 
-                {/* 2. Tarjeta Azul (Bordes rectos y etiqueta en el techo) */}
+                {/* Tarjeta Azul */}
                 <div className="bg-[#1a2233] border border-gray-700 rounded-none flex flex-col transition-all shadow-lg overflow-hidden">
-
-                  <div className="p-5 pt-2 flex flex-col justify-between h-full">
-                    {/* Fila superior: Sede con ícono */}
-                    <div className="flex justify-center items-center mb-5 border-b border-gray-700/50 pb-3">
-                      <span className="text-base font-bold text-white-400 uppercase tracking-wide flex items-center gap-2">
-                        <span className="text-red-400 text-sm">📍</span> 
+                  <div className="flex flex-col justify-between h-full">
+                    {/* Sede */}
+                    <div className="flex justify-center items-center h-10 border-b border-gray-700/50 bg-black/20">
+                      <span className="text-sm font-bold text-white uppercase tracking-[0.3em] flex items-center gap-3">
+                        <span className="text-red-500 text-lg">📍</span>
                         {getEstadio(partido.equipo_a, partido.equipo_b)}
                       </span>
                     </div>
 
-                    {/* Fila central: Banderas y VS */}
-                    <div className="flex justify-between items-center mb-6">
+                    {/* Banderas y VS */}
+                    <div className="flex justify-between items-center h-24">
                       <div className="flex flex-col items-center gap-2 w-1/3">
-                        <img className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700" src={getLogo(partido.equipo_a)} alt={partido.equipo_a} />
-                        <span className="font-bold text-sm text-center text-white uppercase">{partido.equipo_a}</span>
+                        <img
+                          className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700"
+                          src={getLogo(partido.equipo_a)}
+                          alt={partido.equipo_a}
+                        />
+                        <span className="font-bold text-sm text-center text-white uppercase">
+                          {partido.equipo_a}
+                        </span>
                       </div>
 
                       <div className="w-1/3 text-center">
@@ -164,20 +190,34 @@ export default function Page() {
                       </div>
 
                       <div className="flex flex-col items-center gap-2 w-1/3">
-                        <img className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700" src={getLogo(partido.equipo_b)} alt={partido.equipo_b} />
-                        <span className="font-bold text-sm text-center text-white uppercase">{partido.equipo_b}</span>
+                        <img
+                          className="w-16 h-10 object-cover rounded-none shadow-sm border border-gray-700"
+                          src={getLogo(partido.equipo_b)}
+                          alt={partido.equipo_b}
+                        />
+                        <span className="font-bold text-sm text-center text-white uppercase">
+                          {partido.equipo_b}
+                        </span>
                       </div>
                     </div>
 
-                    {/* Precio y Botón  */}
-                    <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-none">
-                      <span className="text-xs text-gray-400 uppercase tracking-wide">Precio desde</span>
-                      <span className="text-2xl font-black text-green-400">USD {partido.precio_base}</span>
+                    {/* Precio */}
+                    <div className="flex justify-between items-end mb-4 bg-black/20 p-12 rounded-none">
+                      <span className="text-xs text-gray-400 uppercase tracking-wide">
+                        Precio desde
+                      </span>
+                      <span className="text-2xl font-black text-green-400">
+                        USD {partido.precio_base}
+                      </span>
                     </div>
 
+                    {/* Botón */}
                     <div className="flex justify-center mt-2">
-                      <Link href={`/entradas?partido_id=${partido.id}`} className="w-[85%]">
-                        <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-none transition-all active:scale-[0.98] shadow-md">
+                      <Link
+                        href={`/entradas?partido_id=${partido.id}`}
+                        className="w-[100%]"
+                      >
+                        <button className="w-full h-13 bg-white hover:bg-gray-200 text-black font-bold py-8 rounded-none transition-all active:scale-[0.98] shadow-md text-base">
                           CONSEGUÍ TU ENTRADA
                         </button>
                       </Link>
