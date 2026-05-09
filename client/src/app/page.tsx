@@ -17,11 +17,11 @@ type Partido = {
 
 // Mapa de logos por país (los que tienen imagen en /public)
 const logos: { [key: string]: string } = {
-  'ARGENTINA': '/logo-argentina.png',
-  'ARGELIA': '/logo-argelia.png',
-  'AUSTRIA': '/logo-austria.png',
-  'JORDANIA': '/logo-jordania.png',
-  'BRASIL': '/logo-brasil.png',
+  'ARGENTINA': '/Flag_of_Argentina',
+  'ARGELIA': '/Flag_of_Algeria',
+  'AUSTRIA': '/Flag_of_Austria',
+  'JORDANIA': '/Flag_of_Jordan',
+  
 };
 
 const getLogo = (equipo: string) => logos[equipo.toUpperCase()] ?? '/Logo-Copa-Mundial.png';
