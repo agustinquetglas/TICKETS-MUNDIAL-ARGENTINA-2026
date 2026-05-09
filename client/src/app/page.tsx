@@ -83,37 +83,53 @@ export default function Page() {
           <p style={{ textAlign: 'center', padding: '2rem' }}>No hay partidos disponibles.</p>
         )}
 
-        {partidos.map((partido) => {
-          const { dia, numero, hora } = formatearFecha(partido.fecha);
-          return (
-            <div className="partidos" key={partido.id}>
-              <div className="parte-arriba">
-                <p className="dia-numero">{numero}</p>
-                <div className="fecha">
-                  <p className="dia">{dia}</p>
-                  <p className="hora">{hora}</p>
-                </div>
-                <img className="img-logo-mundial" src="/Logo-Copa-Mundial.png" alt="logo" />
-              </div>
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 max-w-6xl mx-auto px-4">
+          {partidos.map((partido) => {
+            const { dia, numero, hora } = formatearFecha(partido.fecha);
+            return (
+              <div key={partido.id} className="bg-[#1a2233] border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:border-gray-500 transition-all shadow-lg">
 
-              <div className="parte-abajo">
-                <div className="escudos">
-                  <img className="img-escudos-local" src={getLogo(partido.equipo_a)} alt={partido.equipo_a} />
-                  <p className="vs">VS.</p>
-                  <img className="img-escudos-visitante" src={getLogo(partido.equipo_b)} alt={partido.equipo_b} />
+                {/* 1. Fila superior compacta */}
+                <div className="flex justify-between items-center text-xs text-gray-400 mb-4 border-b border-gray-800 pb-2">
+                  <span className="font-medium tracking-wide uppercase">{dia} {numero} • {hora} HS</span>
+                  <span className="bg-gray-800 text-gray-300 px-2 py-1 rounded-md text-[10px] font-bold tracking-wider">
+                    FASE DE GRUPOS
+                  </span>
                 </div>
 
-                <h2 className="selecciones">{partido.equipo_a} - {partido.equipo_b}</h2>
-                <p className="estadio">Desde USD {partido.precio_base}</p>
-                <div className="linea-divisora"></div>
+                {/* 2. Fila central: Equipos */}
+                <div className="flex justify-between items-center mb-6">
+                  <div className="flex flex-col items-center gap-2 w-1/3">
+                    <img className="w-16 h-16 object-contain" src={getLogo(partido.equipo_a)} alt={partido.equipo_a} />
+                    <span className="font-bold text-sm text-center text-white">{partido.equipo_a}</span>
+                  </div>
 
-                <Link href={`/entradas?partido_id=${partido.id}`}>
-                  <button className="comprar">Comprar</button>
+                  <div className="w-1/3 text-center">
+                    <span className="text-gray-600 font-black text-sm bg-gray-900/50 px-3 py-1 rounded-full">VS</span>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-2 w-1/3">
+                    <img className="w-16 h-16 object-contain" src={getLogo(partido.equipo_b)} alt={partido.equipo_b} />
+                    <span className="font-bold text-sm text-center text-white">{partido.equipo_b}</span>
+                  </div>
+                </div>
+
+                {/* 3. Precio */}
+                <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-lg">
+                  <span className="text-xs text-gray-400 uppercase tracking-wide">Precio desde</span>
+                  <span className="text-2xl font-black text-green-400">USD {partido.precio_base}</span>
+                </div>
+
+                {/* 4. Botón Comprar */}
+                <Link href={`/entradas?partido_id=${partido.id}`} className="w-full">
+                  <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-lg transition-all active:scale-[0.98]">
+                    COMPRAR ENTRADA
+                  </button>
                 </Link>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </main>
     </>
   );
