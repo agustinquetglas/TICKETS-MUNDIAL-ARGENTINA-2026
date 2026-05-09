@@ -1,22 +1,19 @@
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
-import { createClient } from '@supabase/supabase-js';
+import { SupabaseService } from '../supabase/supabase.service';
 import { LoginDto, RegisterDto, ForgotPasswordDto } from './dto/usuario.dto';
 
 @Injectable()
 export class UsuariosService {
-    // Usamos el SERVICE_ROLE para tener permisos de administración en el backend
-    private supabase = createClient(
-        process.env.SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    );
+
+    constructor(private readonly supabaseService: SupabaseService) { }
 
     async login(dto: LoginDto) {
-        const { data, error } = await this.supabase.auth.signInWithPassword({
+        const supabase = this.supabaseService.getClient();
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: dto.email,
             password: dto.password,
         });
 
-        // Si hay error, Supabase ya nos dice si es por falta de confirmación o datos mal puestos
         if (error) {
             throw new UnauthorizedException('Email o contraseña incorrectos.');
         }
@@ -28,11 +25,14 @@ export class UsuariosService {
     }
 
     async register(dto: RegisterDto) {
-        const { data, error } = await this.supabase.auth.signUp({
+        const supabase = this.supabaseService.getClient();
+
+        // 1. Crear el usuario en Supabase Auth
+        const { data, error } = await supabase.auth.signUp({
             email: dto.email,
             password: dto.password,
             options: {
-                data: { 
+                data: {
                     full_name: dto.full_name,
                     document: dto.document,
                     phone: dto.phone,
@@ -44,14 +44,29 @@ export class UsuariosService {
 
         if (error) throw new BadRequestException(error.message);
 
+        // 2. Guardar los datos extra en la tabla Usuario
+        if (data.user) {
+            await supabase
+                .from('Usuario')
+                .update({
+                    Nombre: dto.full_name,
+                    Documento: dto.document,
+                    Telefono: dto.phone,
+                    Provincia: dto.province,
+                    Localidad: dto.locality,
+                })
+                .eq('id', data.user.id);
+        }
+
         return {
             message: 'Cuenta creada con éxito. Por favor, verificá tu correo electrónico.'
         };
     }
 
     async forgotPassword(dto: ForgotPasswordDto) {
-        const { error } = await this.supabase.auth.resetPasswordForEmail(dto.email, {
-            redirectTo: 'http://localhost:3000/reset-password', // Ajusta a tu URL de front
+        const supabase = this.supabaseService.getClient();
+        const { error } = await supabase.auth.resetPasswordForEmail(dto.email, {
+            redirectTo: 'http://localhost:3000/login/actualizar-contraseña',
         });
 
         if (error) throw new BadRequestException(error.message);

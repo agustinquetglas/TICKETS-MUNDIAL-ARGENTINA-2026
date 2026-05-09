@@ -12,7 +12,7 @@ export class LoginDto {
 export class RegisterDto {
     @IsString()
     @MinLength(2, { message: 'El nombre debe tener al menos 2 caracteres.' })
-    full_name: string;
+    full_name: string;    // nombre completo, sin apellido separado
 
     @IsEmail({}, { message: 'El email no tiene un formato válido.' })
     email: string;

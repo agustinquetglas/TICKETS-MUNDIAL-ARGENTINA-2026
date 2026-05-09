@@ -31,7 +31,7 @@ export class TicketsService {
             throw new BadRequestException('El sector seleccionado no existe.');
         }
 
-        if (sector.partido_id !== partidoId) {
+        if (Number(sector.partido_id) !== Number(partidoId)) {
             throw new BadRequestException('El sector no pertenece al partido indicado.');
         }
 
