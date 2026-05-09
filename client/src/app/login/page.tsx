@@ -14,6 +14,37 @@ export default function PaginaLogin() {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
+  const [document, setDocument] = useState('');
+  const [phone, setPhone] = useState('');
+  const [province, setProvince] = useState('');
+  const [locality, setLocality] = useState('');
+
+  const PROVINCIAS_ARGENTINA = [
+    'Buenos Aires',
+    'Ciudad Autónoma de Buenos Aires',
+    'Catamarca',
+    'Chaco',
+    'Chubut',
+    'Córdoba',
+    'Corrientes',
+    'Entre Ríos',
+    'Formosa',
+    'Jujuy',
+    'La Pampa',
+    'La Rioja',
+    'Mendoza',
+    'Misiones',
+    'Neuquén',
+    'Río Negro',
+    'Salta',
+    'San Juan',
+    'San Luis',
+    'Santa Cruz',
+    'Santa Fe',
+    'Santiago del Estero',
+    'Tierra del Fuego, Antártida e Islas del Atlántico Sur',
+    'Tucumán',
+  ];
 
   const router = useRouter();
 
@@ -23,6 +54,10 @@ export default function PaginaLogin() {
     setName('');
     setMensaje('');
     setError('');
+    setDocument('');
+    setPhone('');
+    setProvince('');
+    setLocality('');
   };
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,6 +76,7 @@ export default function PaginaLogin() {
     if (!res.ok) { setError(data.message || 'Error al iniciar sesión.'); setLoading(false); return; }
 
     setLoading(false);
+    localStorage.setItem('user_email', email);
     router.push('/');
   };
 
@@ -53,7 +89,15 @@ export default function PaginaLogin() {
     const res = await fetch('http://localhost:3001/usuarios/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, full_name: name }),
+      body: JSON.stringify({
+        email,
+        password,
+        full_name: name,
+        document,
+        phone,
+        province,
+        locality
+      }),
     });
 
     const data = await res.json();
@@ -213,6 +257,49 @@ export default function PaginaLogin() {
                 className="input"
                 required
                 autoComplete="new-password"
+              />
+              <input
+                type="text"
+                placeholder="Documento"
+                value={document}
+                onChange={(e) => {
+                  setDocument(e.target.value);
+                }}
+                className="input"
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Teléfono"
+                value={phone}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                }}
+                className="input"
+                required
+              />
+              <select
+                value={province}
+                onChange={(e) => {
+                  setProvince(e.target.value);
+                }}
+                className="input"
+                required
+              >
+                <option value="" disabled>Seleccione una provincia</option>
+                {PROVINCIAS_ARGENTINA.map((p) => (
+                  <option key={p} value={p}>{p}</option>
+                ))}
+              </select>
+              <input
+                type="text"
+                placeholder="Localidad"
+                value={locality}
+                onChange={(e) => {
+                  setLocality(e.target.value);
+                }}
+                className="input"
+                required
               />
               <button type="submit" className="btn-primary" disabled={loading}>
                 {loading ? 'CARGANDO...' : 'REGISTRARSE'}

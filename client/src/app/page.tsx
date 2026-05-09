@@ -4,6 +4,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "../utils/supabase/client";
+import DarkModeToggle from "../components/DarkModeToggle";
+import UserMenu from "../components/UserMenu";
 
 type Partido = {
   id: number;
@@ -59,9 +61,8 @@ export default function Page() {
   return (
     <>
       <header className="header">
-        <Link href="/login" className="btn-header-login">
-          Ingresar
-        </Link>
+        <DarkModeToggle />
+        <UserMenu />
       </header>
 
       <main>

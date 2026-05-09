@@ -1,5 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
 
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-border: #000000;
+    --card-bg: #ffffff;
+    --login-bg: #f0f2f5;
+    --input-bg: #ffffff;
+    --input-border: #d1d5db;
+    --input-text: #000000;
+    --btn-primary-bg: #000000;
+    --btn-primary-text: #ffffff;
+    --header-btn-bg: #ffffff;
+    --header-btn-text: #000000;
+}
+
+.dark {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --card-border: #334155;
+    --card-bg: #1e293b;
+    --login-bg: #020617;
+    --input-bg: #1e293b;
+    --input-border: #475569;
+    --input-text: #ffffff;
+    --btn-primary-bg: #ffffff;
+    --btn-primary-text: #000000;
+    --header-btn-bg: rgba(255, 255, 255, 0.1);
+    --header-btn-text: #ffffff;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,36 +41,68 @@ html,
 body {
     overflow-x: hidden;
     width: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-
-
 
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-image: url('/fondo-header.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/fondo-header1.png);
     background-size: cover;
-    background-position: center 5%;
-    padding: 0.8rem 1rem;
+    background-position: center;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.btn-dark-mode {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.btn-dark-mode:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(10deg);
+}
+
+
+
+
+
+
 .btn-header-login {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
+    background-color: var(--header-btn-bg);
+    color: var(--header-btn-text);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
     white-space: nowrap;
     margin-left: auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
 }
 
 .btn-header-login:hover {
-    background-color: #dddddd;
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.05);
 }
 
 .logo-mundial {
@@ -124,8 +186,9 @@ h1 {
     align-items: center;
     width: 100%;
     max-width: 500px;
-    border: 1px solid #000000;
+    border: 1px solid var(--card-border);
     border-top: none;
+    background-color: var(--card-bg);
 }
 
 
@@ -176,24 +239,26 @@ h1 {
 
 .linea-divisora {
     width: 85%;
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid var(--card-border);
 }
 
 
 .comprar {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
     padding: 0.6rem 1.5rem;
-    border: 2px solid #ffffff;
+    border: 2px solid var(--btn-primary-text);
     border-radius: 0.5rem;
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
     margin: 1.5rem;
+    transition: all 0.2s ease;
 }
 
-.comprar:active {
-    opacity: 0.7;
+.comprar:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
 }
 
 /* ========== LOGIN PAGE ========== */
@@ -203,19 +268,21 @@ h1 {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f2f5;
+    background-color: var(--login-bg);
     padding: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .login-card {
     display: flex;
     flex-direction: row;
-    background-color: #ffffff;
+    background-color: var(--card-bg);
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     max-width: 900px;
     width: 100%;
+    transition: background-color 0.3s ease;
 }
 
 /* Mitad Izquierda (Logo) */
@@ -276,23 +343,26 @@ h1 {
     font-size: 24px;
     font-weight: 800;
     margin-bottom: 25px;
-    color: #000;
+    color: var(--text-color);
 }
 
 
 .input {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
     border-radius: 6px;
     font-size: 14px;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .input:focus {
     border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -397,7 +467,9 @@ h1 {
 
 .selector-sector {
     padding: 0.5rem;
-    border: 2px solid #2e2d2d;
+    border: 2px solid var(--card-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
     border-radius: 4px;
     font-size: 1rem;
     width: 100%;
@@ -439,7 +511,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     margin-top: 0.5rem;
-    border: 2px solid #2e2d2d;
+    border: 2px solid var(--card-border);
     width: fit-content;
 }
 
@@ -448,8 +520,8 @@ h1 {
     font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     border: none;
     border-radius: 0;
 }
@@ -536,4 +608,328 @@ h1 {
 
 .btn-continuar:active {
     opacity: 0.7;
+}
+
+.btn-cancelar {
+    background-color: #dc2626;
+    color: #ffffff;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+    max-width: 350px;
+    align-self: center;
+    transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+    background-color: #b91c1c;
+}
+
+.btn-cancelar:active {
+    opacity: 0.7;
+}
+
+/* ========== MIS ENTRADAS (Compras Realizadas) ========== */
+
+.titulo-entradas {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex: 1;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+}
+
+.btn-volver {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    padding: 0.45rem 1.1rem;
+    margin-left: auto;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.main-entradas {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.3rem 1rem 3rem;
+}
+
+/* Tabla header */
+.tabla-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Filas de la tabla */
+.tabla-fila {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 1rem 1.2rem;
+    align-items: center;
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.tabla-fila:last-child {
+    border-radius: 0 0 10px 10px;
+}
+
+.tabla-fila:hover {
+    background-color: var(--input-bg);
+    transform: scale(1.005);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.tabla-fila p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Botón comprobante */
+.btn-comprobante {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-comprobante:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-comprobante:active {
+    transform: translateY(0);
+    opacity: 0.7;
+}
+
+/* Responsive: en móvil pasa a layout de tarjetas */
+@media (max-width: 640px) {
+    .tabla-header {
+        display: none;
+    }
+
+    .tabla-fila {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        margin-bottom: 0.8rem;
+        border: 1px solid var(--card-border);
+    }
+
+    .tabla-fila:last-child {
+        border-radius: 10px;
+    }
+
+    .tabla-fila p:first-child {
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .tabla-fila p {
+        white-space: normal;
+    }
+
+    .btn-comprobante {
+        width: 100%;
+        padding: 0.6rem;
+        margin-top: 0.3rem;
+        text-align: center;
+    }
+}
+
+/* ========== USER MENU (Avatar + Dropdown) ========== */
+
+.user-menu-wrapper {
+    position: relative;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.user-avatar-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50px;
+    padding: 4px 10px 4px 4px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    color: #ffffff;
+}
+
+.user-avatar-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.04);
+}
+
+.user-avatar-inicial {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.user-avatar-chevron {
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+}
+
+.user-avatar-chevron.open {
+    transform: rotate(180deg);
+}
+
+.user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    min-width: 210px;
+    overflow: hidden;
+    z-index: 100;
+    animation: dropdownFadeIn 0.18s ease;
+}
+
+@keyframes dropdownFadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.dark .user-dropdown {
+    background: #1e293b;
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.user-dropdown-email {
+    padding: 12px 16px 8px;
+    font-size: 0.78rem;
+    color: #6b7280;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.dark .user-dropdown-email {
+    color: #94a3b8;
+}
+
+.user-dropdown-divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.08);
+    margin: 0 12px;
+}
+
+.dark .user-dropdown-divider {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.user-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 16px;
+    background: none;
+    border: none;
+    text-decoration: none;
+    color: #111827;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    text-align: left;
+}
+
+.dark .user-dropdown-item {
+    color: #f1f5f9;
+}
+
+.user-dropdown-item:hover {
+    background: #f3f4f6;
+}
+
+.dark .user-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.user-dropdown-logout {
+    color: #dc2626;
+    padding-bottom: 12px;
+}
+
+.dark .user-dropdown-logout {
+    color: #f87171;
+}
+
+.user-dropdown-logout:hover {
+    background: #fef2f2;
+}
+
+.dark .user-dropdown-logout:hover {
+    background: rgba(220, 38, 38, 0.12);
 }

@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsDateString, Min } from 'class-validator';
+import { IsString, IsDateString } from 'class-validator';
 
 export class PartidoDto {
     @IsString()
@@ -9,12 +9,4 @@ export class PartidoDto {
 
     @IsDateString()
     fecha: string;
-
-    @IsNumber()
-    @Min(0)
-    precio_base: number;
-
-    @IsNumber()
-    @Min(0)
-    stock_disponible: number;
 }

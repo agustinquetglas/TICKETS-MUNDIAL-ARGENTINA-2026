@@ -13,6 +13,6 @@ export class ComprarTicketsDto {
     @Max(6)
     cantidad: number;
 
-    @IsString()
-    sector: string;
+    @IsUUID()
+    sectorId: string;
 }
