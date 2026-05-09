@@ -633,3 +633,157 @@ h1 {
 .btn-cancelar:active {
     opacity: 0.7;
 }
+
+/* ========== MIS ENTRADAS (Compras Realizadas) ========== */
+
+.titulo-entradas {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    flex: 1;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+}
+
+.btn-volver {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    padding: 0.45rem 1.1rem;
+    margin-left: auto;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.btn-volver:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.main-entradas {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0.3rem 1rem 3rem;
+}
+
+/* Tabla header */
+.tabla-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 0.8rem 1.2rem;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 10px 10px 0 0;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Filas de la tabla */
+.tabla-fila {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.5fr 1fr;
+    gap: 0.5rem;
+    padding: 1rem 1.2rem;
+    align-items: center;
+    border-left: 1px solid var(--card-border);
+    border-right: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+    background-color: var(--card-bg);
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.tabla-fila:last-child {
+    border-radius: 0 0 10px 10px;
+}
+
+.tabla-fila:hover {
+    background-color: var(--input-bg);
+    transform: scale(1.005);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+.tabla-fila p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Botón comprobante */
+.btn-comprobante {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-comprobante:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-comprobante:active {
+    transform: translateY(0);
+    opacity: 0.7;
+}
+
+/* Responsive: en móvil pasa a layout de tarjetas */
+@media (max-width: 640px) {
+    .tabla-header {
+        display: none;
+    }
+
+    .tabla-fila {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+        padding: 1rem 1.2rem;
+        border-radius: 10px;
+        margin-bottom: 0.8rem;
+        border: 1px solid var(--card-border);
+    }
+
+    .tabla-fila:last-child {
+        border-radius: 10px;
+    }
+
+    .tabla-fila p:first-child {
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .tabla-fila p {
+        white-space: normal;
+    }
+
+    .btn-comprobante {
+        width: 100%;
+        padding: 0.6rem;
+        margin-top: 0.3rem;
+        text-align: center;
+    }
+}
