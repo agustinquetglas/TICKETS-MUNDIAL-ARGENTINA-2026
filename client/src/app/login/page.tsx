@@ -76,6 +76,7 @@ export default function PaginaLogin() {
     if (!res.ok) { setError(data.message || 'Error al iniciar sesión.'); setLoading(false); return; }
 
     setLoading(false);
+    localStorage.setItem('user_email', email);
     router.push('/');
   };
 
