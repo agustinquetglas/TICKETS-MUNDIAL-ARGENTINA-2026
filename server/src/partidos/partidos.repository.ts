@@ -6,10 +6,10 @@ export class PartidosRepository {
     constructor(private readonly supabaseService: SupabaseService) {}
 
     async obtenerTodos() {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { data, error } = await supabase
             .from('Partidos')
-            .select('*');
+            .select('*, Sector(*)');
 
         if (error) {
             console.error('Error al obtener partidos de Supabase:', error);
@@ -20,10 +20,10 @@ export class PartidosRepository {
     }
 
     async obtenerPorId(id: number) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { data, error } = await supabase
             .from('Partidos')
-            .select('*')
+            .select('*, Sector(*)')
             .eq('id', id)
             .single();
 

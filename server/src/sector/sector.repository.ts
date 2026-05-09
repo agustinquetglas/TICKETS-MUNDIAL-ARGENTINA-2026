@@ -6,7 +6,7 @@ export class SectorRepository {
     constructor(private readonly supabaseService: SupabaseService) {}
 
     async obtenerPorId(id: string) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { data, error } = await supabase
             .from('Sector')
             .select('*')
@@ -22,7 +22,7 @@ export class SectorRepository {
     }
 
     async obtenerPorPartido(partidoId: number) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { data, error } = await supabase
             .from('Sector')
             .select('*')

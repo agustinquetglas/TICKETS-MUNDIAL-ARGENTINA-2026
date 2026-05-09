@@ -43,7 +43,7 @@ export default function PaginaCompra() {
     }
 
     setLoadingSectores(true);
-    fetch(`http://localhost:3001/sectores/${partidoId}`)
+    fetch(`http://127.0.0.1:3001/sectores/${partidoId}`)
       .then((res) => res.json())
       .then((data: SectorDB[]) => {
         setSectores(data);

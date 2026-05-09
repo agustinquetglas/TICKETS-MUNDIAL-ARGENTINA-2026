@@ -34,15 +34,24 @@ export default function Page() {
 
   useEffect(() => {
     const fetchPartidos = async () => {
-      const { data, error } = await supabase
-        .from('Partidos')
-        .select('*')
-        .order('fecha', { ascending: true });
+      try {
+        const res = await fetch('http://127.0.0.1:3001/partidos');
+        if (!res.ok) throw new Error('Error al cargar partidos');
+        const data = await res.json();
+        
+        const partidosProcesados = data.map((p: any) => ({
+          ...p,
+          precio_base: p.precio_base || (p.Sector && p.Sector.length > 0 
+            ? Math.min(...p.Sector.map((s: any) => s.precio_sector))
+            : p.precio_base || 0)
+        }));
 
-      if (!error && data) {
-        setPartidos(data);
+        setPartidos(partidosProcesados);
+      } catch (err) {
+        console.error('Error fetching partidos:', err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchPartidos();

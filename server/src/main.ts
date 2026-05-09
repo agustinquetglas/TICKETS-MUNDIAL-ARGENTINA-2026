@@ -20,7 +20,7 @@ async function bootstrap() {
 
   // Habilitar CORS para permitir peticiones desde el frontend
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: '*',
   });
 
   await app.listen(3001);
