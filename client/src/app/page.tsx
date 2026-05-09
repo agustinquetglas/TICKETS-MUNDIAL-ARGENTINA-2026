@@ -112,75 +112,107 @@ export default function Page() {
           {partidos.map((partido) => {
             const { dia, numero, hora } = formatearFecha(partido.fecha);
             return (
-              <div
-                key={partido.id}
-                className="bg-[#1a2233] border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:border-gray-500 transition-all shadow-lg"
-              >
-                {/* fecha hora y sede */}
-                <div className="flex justify-between items-center mb-4 border-b border-gray-600 pb-3">
-                  <div className="text-sm font-extrabold text-white tracking-wide uppercase">
-                    {dia} {numero} <span className="text-gray-400 mx-1">•</span>{" "}
-                    {hora} HS
-                    <span className="text-blue-400 ml-1">
-                      {/* paso equipo_a como local y equipo_b como visitante */}•{" "}
+              <div key={partido.id} className="flex flex-col mb-4">
+                {/* 1. Encabezado de Fecha (Estilo Calendario Compacto) */}
+                <div
+                  className="flex justify-between items-start px-2 mb-2 border-b border-gray-800/50 pb-2"
+                  style={{
+                    fontFamily:
+                      'var(--font-space-grotesk), "Space Grotesk", sans-serif',
+                  }}
+                >
+                  <div className="flex gap-6">
+                    {/* Bloque Número y Mes */}
+                    <div className="flex flex-col items-center justify-center border-r border-gray-800 pr-6">
+                      <span className="text-2xl font-bold text-white leading-none">
+                        {numero}
+                      </span>
+                      {/* Como tu función no devuelve el mes, puse JUN (Junio) fijo por el Mundial. Lo podés cambiar */}
+                      <span className="text-[10px] text-gray-500 font-bold uppercase mt-1 tracking-widest">
+                        JUN
+                      </span>
+                    </div>
+
+                    {/* Bloque Día y Hora */}
+                    <div className="flex flex-col justify-center">
+                      <span className="text-sm font-bold text-gray-300 uppercase tracking-wider">
+                        {dia}
+                      </span>
+                      <span className="text-xs text-gray-500 font-mono mt-0.5">
+                        {hora} hs
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Etiqueta Fase */}
+                  <span className="text-xs font-bold text-gray-600 tracking-widest mt-1">
+                    [ FASE DE GRUPOS ]
+                  </span>
+                </div>
+
+                {/* 2. Tarjeta Azul (Sin la fecha adentro) */}
+                <div className="bg-[#1a2233] border border-gray-700 rounded-xl p-5 flex flex-col justify-between hover:border-gray-500 transition-all shadow-lg">
+                  {/* Fila superior: Sede con ícono de ubicación */}
+                  <div className="flex justify-start items-center mb-5 border-b border-gray-700/50 pb-3">
+                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wide flex items-center gap-2">
+                      <span className="text-red-400 text-sm">📍</span>
                       {getEstadio(partido.equipo_a, partido.equipo_b)}
                     </span>
                   </div>
-                  <span className="bg-blue-900/40 text-blue-300 px-2 py-1 rounded text-[10px] font-black tracking-widest border border-blue-800/50">
-                    FASE DE GRUPOS
-                  </span>
-                </div>
 
-                {/* 2. Fila central: Equipos */}
-                <div className="flex justify-between items-center mb-6">
-                  <div className="flex flex-col items-center gap-2 w-1/3">
-                    <img
-                      className="w-16 h-16 object-contain"
-                      src={getLogo(partido.equipo_a)}
-                      alt={partido.equipo_a}
-                    />
-                    <span className="font-bold text-sm text-center text-white">
-                      {partido.equipo_a}
+                  {/* Fila central: Banderas y VS */}
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="flex flex-col items-center gap-2 w-1/3">
+                      <img
+                        className="w-16 h-10 object-cover rounded shadow-sm border border-gray-700"
+                        src={getLogo(partido.equipo_a)}
+                        alt={partido.equipo_a}
+                      />
+                      <span className="font-bold text-sm text-center text-white uppercase">
+                        {partido.equipo_a}
+                      </span>
+                    </div>
+
+                    <div className="w-1/3 text-center">
+                      <span className="text-gray-500 font-black text-sm">
+                        VS
+                      </span>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2 w-1/3">
+                      <img
+                        className="w-16 h-10 object-cover rounded shadow-sm border border-gray-700"
+                        src={getLogo(partido.equipo_b)}
+                        alt={partido.equipo_b}
+                      />
+                      <span className="font-bold text-sm text-center text-white uppercase">
+                        {partido.equipo_b}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Precio */}
+                  <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-lg">
+                    <span className="text-xs text-gray-400 uppercase tracking-wide">
+                      Precio desde
+                    </span>
+                    <span className="text-2xl font-black text-green-400">
+                      USD {partido.precio_base}
                     </span>
                   </div>
 
-                  <div className="w-1/3 text-center">
-                    <span className="text-gray-600 font-black text-sm bg-gray-900/50 px-3 py-1 rounded-full">
-                      VS
-                    </span>
-                  </div>
-
-                  <div className="flex flex-col items-center gap-2 w-1/3">
-                    <img
-                      className="w-16 h-16 object-contain"
-                      src={getLogo(partido.equipo_b)}
-                      alt={partido.equipo_b}
-                    />
-                    <span className="font-bold text-sm text-center text-white">
-                      {partido.equipo_b}
-                    </span>
+                  {/* Botón Comprar */}
+                  <div className="flex justify-center mt-2">
+                    <Link
+                      href={`/entradas?partido_id=${partido.id}`}
+                      className="w-[85%]"
+                    >
+                      <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-lg transition-all active:scale-[0.98] shadow-md">
+                        COMPRAR ENTRADA
+                      </button>
+                    </Link>
                   </div>
                 </div>
-
-                {/* 3. Precio */}
-                <div className="flex justify-between items-end mb-4 bg-black/20 p-3 rounded-lg">
-                  <span className="text-xs text-gray-400 uppercase tracking-wide">
-                    Precio desde
-                  </span>
-                  <span className="text-2xl font-black text-green-400">
-                    USD {partido.precio_base}
-                  </span>
-                </div>
-
-                {/* 4. Botón Comprar */}
-                <Link
-                  href={`/entradas?partido_id=${partido.id}`}
-                  className="w-full"
-                >
-                  <button className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-bold py-3 rounded-lg transition-all active:scale-[0.98]">
-                    COMPRAR ENTRADA
-                  </button>
-                </Link>
               </div>
             );
           })}
