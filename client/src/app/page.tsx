@@ -118,13 +118,13 @@ export default function Page() {
           </p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 max-w-2xl mx-auto px-6 md:px-20 justify-items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-6 max-w-8xl mx-auto px-6 md:px-20 lg:px-32 justify-items-center" >
           {partidos.map((partido) => {
             const { dia, numero, hora } = formatearFecha(partido.fecha);
             return (
               <div
                 key={partido.id}
-                className="flex flex-col mb-10 max-w-md mx-auto w-[92%]"
+                className="flex flex-col mb-10 max-w-xl mx-auto w-[92%]"
               >
                 {/* Encabezado: Fecha, Hora y Logo */}
                 <div
