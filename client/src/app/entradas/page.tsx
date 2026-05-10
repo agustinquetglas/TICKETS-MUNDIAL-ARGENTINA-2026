@@ -41,7 +41,6 @@ function PaginaCompraContent() {
       setLoadingSectores(false);
       return;
     }
-
     setLoadingSectores(true);
     fetch(`http://127.0.0.1:3001/sectores/${partidoId}`)
       .then((res) => res.json())
@@ -219,10 +218,10 @@ function PaginaCompraContent() {
           {loading ? 'PROCESANDO...' : 'CONTINUAR →'}
         </button>
 
-        <button 
-          type="button" 
+        <button
+          type="button"
           className="btn-cancelar"
-          onClick={() => router.back()} 
+          onClick={() => router.back()}
           disabled={loading}
         >
           CANCELAR
