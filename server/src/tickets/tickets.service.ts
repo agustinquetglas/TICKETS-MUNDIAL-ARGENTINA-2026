@@ -83,9 +83,9 @@ export class TicketsService {
                 mensaje: 'Pedido generado correctamente. Completá el pago para asegurar tu lugar en el estadio.'
             };
 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error in procesarCompra:', error);
-            throw new InternalServerErrorException('Ocurrió un error al procesar el pedido. Intente nuevamente.');
+            throw new InternalServerErrorException('Error: ' + (error.message || JSON.stringify(error)));
         }
     }
 
@@ -107,6 +107,48 @@ export class TicketsService {
             }
         } catch (error) {
             console.error('Error al confirmar pago:', error);
+        }
+    }
+
+    async obtenerMisEntradas(usuarioId: string) {
+        if (!usuarioId) {
+            throw new BadRequestException('ID de usuario requerido');
+        }
+        return await this.pedidosRepo.obtenerPedidosDeUsuario(usuarioId);
+    }
+
+    async sincronizarPagosPendientes(usuarioId: string) {
+        try {
+            const pedidos = await this.pedidosRepo.obtenerPedidosDeUsuario(usuarioId);
+            const pendientes = pedidos.filter((p: any) => p.estado_pago === 'PENDIENTE');
+
+            if (pendientes.length === 0) return { ok: true };
+
+            const { MercadoPagoConfig, Payment } = await import('mercadopago');
+            const client = new MercadoPagoConfig({
+                accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!
+            });
+            const paymentClient = new Payment(client);
+
+            for (const pedido of pendientes) {
+                const result = await paymentClient.search({
+                    options: {
+                        external_reference: pedido.id
+                    }
+                });
+
+                if (result.results && result.results.length > 0) {
+                    const pagosAprobados = result.results.filter((p: any) => p.status === 'approved');
+                    if (pagosAprobados.length > 0) {
+                        const pago = pagosAprobados[0];
+                        await this.pedidosRepo.actualizarEstadoPago(pedido.id, 'PAGADO', String(pago.id));
+                    }
+                }
+            }
+            return { ok: true };
+        } catch (error) {
+            console.error('Error al sincronizar pagos:', error);
+            return { ok: false };
         }
     }
 }

@@ -1,9 +1,73 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createClient } from '../../utils/supabase/client';
 import DarkModeToggle from '../../components/DarkModeToggle';
 
+type Pedido = {
+    id: string;
+    fecha_compra: string;
+    estado_pago: string;
+    monto_total: number;
+    Tickets: Array<{
+        id: string;
+        Partidos: {
+            equipo_a: string;
+            equipo_b: string;
+        };
+    }>;
+};
+
 export default function PaginaMisEntradas() {
+    const [pedidos, setPedidos] = useState<Pedido[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+
+    const supabase = createClient();
+
+    useEffect(() => {
+        const fetchMisEntradas = async () => {
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (!user) {
+                    setError('Debés iniciar sesión para ver tus entradas.');
+                    setLoading(false);
+                    return;
+                }
+
+                try {
+                    // Sincronizamos con MercadoPago por si el usuario no pasó por la pantalla de pago exitoso
+                    await fetch(`http://localhost:3001/tickets/sincronizar-pagos/${user.id}`);
+                } catch (e) {
+                    console.error('Error sincronizando pagos', e);
+                }
+
+                const res = await fetch(`http://localhost:3001/tickets/mis-entradas/${user.id}`);
+                if (!res.ok) throw new Error('Error al obtener las reservas');
+                const data = await res.json();
+                setPedidos(data);
+            } catch (err: any) {
+                setError(err.message || 'Ocurrió un error inesperado');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchMisEntradas();
+    }, []);
+
+    const formatearFecha = (fechaStr: string) => {
+        const fecha = new Date(fechaStr);
+        return fecha.toLocaleString('es-AR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+    };
 
     return (
         <>
@@ -17,34 +81,50 @@ export default function PaginaMisEntradas() {
             <main className="main-entradas">
                 <h2 className="titulo-entradas">MIS ENTRADAS</h2>
 
-                <div className="tabla-header">
-                    <p>Partido</p>
-                    <p>Reserva</p>
-                    <p>Fecha de compra</p>
-                    <p>Ver comprobante</p>
-                </div>
+                {loading ? (
+                    <p style={{ textAlign: 'center', marginTop: '2rem', color: 'white' }}>Cargando entradas...</p>
+                ) : error ? (
+                    <p style={{ textAlign: 'center', marginTop: '2rem', color: '#ff4d4d' }}>{error}</p>
+                ) : pedidos.length === 0 ? (
+                    <p style={{ textAlign: 'center', marginTop: '2rem', color: 'white' }}>No tenés entradas compradas aún.</p>
+                ) : (
+                    <>
+                        <div className="tabla-header">
+                            <p>Partido</p>
+                            <p>Reserva</p>
+                            <p>Fecha de compra</p>
+                            <p>Ver comprobante</p>
+                        </div>
 
-                <div className="tabla-fila">
-                    <p>Argentina vs Argelia</p>
-                    <p>8005282</p>
-                    <p>16/08/2024 10:24:59</p>
-                    <button className="btn-comprobante">comprobante</button>
-                </div>
+                        {pedidos.map((pedido) => {
+                            // Asumimos que todos los tickets de un pedido son para el mismo partido
+                            const partido = pedido.Tickets[0]?.Partidos;
+                            const tituloPartido = partido 
+                                ? `${partido.equipo_a} vs ${partido.equipo_b}` 
+                                : 'Partido desconocido';
 
-                <div className="tabla-fila">
-                    <p>Argentina vs Francia</p>
-                    <p>6024971</p>
-                    <p>23/02/2024 10:16:35</p>
-                    <button className="btn-comprobante">comprobante</button>
-                </div>
+                            // Recortamos el ID del pedido para mostrar un número de reserva más corto
+                            const reservaId = pedido.id.split('-')[0].toUpperCase();
 
-                <div className="tabla-fila">
-                    <p>Brasil vs Alemania</p>
-                    <p>4257283</p>
-                    <p>25/07/2023 10:09:54</p>
-                    <button className="btn-comprobante">comprobante</button>
-                </div>
-
+                            return (
+                                <div className="tabla-fila" key={pedido.id}>
+                                    <p>{tituloPartido}</p>
+                                    <p>{reservaId}</p>
+                                    <p>{formatearFecha(pedido.fecha_compra)}</p>
+                                    {pedido.estado_pago === 'PAGADO' ? (
+                                        <button className="btn-comprobante" onClick={() => alert('Próximamente: ver comprobante')}>
+                                            comprobante
+                                        </button>
+                                    ) : (
+                                        <span style={{ color: 'orange', fontWeight: 'bold', justifySelf: 'center' }}>
+                                            {pedido.estado_pago}
+                                        </span>
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </>
+                )}
             </main>
         </>
     );

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpException, HttpStatus, Get, Param } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
 import { ComprarTicketsDto } from './dto/comprar-tickets.dto';
 import { PaymentProcessor } from '../payments/PaymentProcessor';
@@ -37,5 +37,21 @@ export class TicketsController {
             await this.ticketsService.confirmarPago(body.data.id);
         }
         return { ok: true };
+    }
+
+    @Get('mis-entradas/:usuarioId')
+    async obtenerMisEntradas(@Param('usuarioId') usuarioId: string) {
+        return await this.ticketsService.obtenerMisEntradas(usuarioId);
+    }
+
+    @Get('confirmar/:pagoId')
+    async confirmarPagoLocal(@Param('pagoId') pagoId: string) {
+        await this.ticketsService.confirmarPago(pagoId);
+        return { ok: true };
+    }
+
+    @Get('sincronizar-pagos/:usuarioId')
+    async sincronizarPagos(@Param('usuarioId') usuarioId: string) {
+        return await this.ticketsService.sincronizarPagosPendientes(usuarioId);
     }
 }

@@ -15,7 +15,7 @@ export class PedidosRepository {
 
         if (error) {
             console.error('Error al crear pedido en Supabase:', error);
-            throw new InternalServerErrorException('Error al registrar el pedido');
+            throw new InternalServerErrorException('Error al registrar el pedido: ' + error.message);
         }
 
         return data;
@@ -35,5 +35,33 @@ export class PedidosRepository {
             console.error('Error al actualizar estado del pedido:', error);
             throw new InternalServerErrorException('Error al actualizar el pedido');
         }
+    }
+
+    async obtenerPedidosDeUsuario(usuarioId: string) {
+        const supabase = this.supabaseService.getAdminClient();
+        const { data, error } = await supabase
+            .from('Pedidos')
+            .select(`
+                id,
+                fecha_compra,
+                estado_pago,
+                monto_total,
+                Tickets (
+                    id,
+                    Partidos (
+                        equipo_a,
+                        equipo_b
+                    )
+                )
+            `)
+            .eq('usuario_id', usuarioId)
+            .order('fecha_compra', { ascending: false });
+
+        if (error) {
+            console.error('Error al obtener pedidos de Supabase:', error);
+            throw new InternalServerErrorException('Error al obtener las reservas');
+        }
+
+        return data;
     }
 }

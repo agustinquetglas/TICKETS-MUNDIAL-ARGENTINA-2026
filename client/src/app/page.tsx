@@ -43,7 +43,7 @@ export default function Page() {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:3001/partidos');
+        const res = await fetch('http://localhost:3001/partidos');
         if (!res.ok) throw new Error('Error al cargar partidos');
         const data = await res.json();
 

@@ -19,12 +19,24 @@ export class SupabaseService {
     }
 
     if (supabaseKey) {
-      this.supabaseAnon = createClient(supabaseUrl, supabaseKey);
+      this.supabaseAnon = createClient(supabaseUrl, supabaseKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+        },
+      });
       this.logger.log('Cliente Anon de Supabase inicializado.');
     }
 
     if (supabaseServiceRoleKey) {
-      this.supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey);
+      this.supabaseAdmin = createClient(supabaseUrl, supabaseServiceRoleKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false,
+        },
+      });
       this.logger.log('Cliente Admin (Service Role) de Supabase inicializado.');
     }
   }
