@@ -53,7 +53,7 @@ body {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(/fondo-header1.png);
     background-size: cover;
     background-position: center;
-    padding: 1rem 1.5rem;
+    padding: 2rem 1.5rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
