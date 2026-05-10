@@ -84,6 +84,7 @@ export class TicketsService {
             };
 
         } catch (error) {
+            console.error('Error in procesarCompra:', error);
             throw new InternalServerErrorException('Ocurrió un error al procesar el pedido. Intente nuevamente.');
         }
     }

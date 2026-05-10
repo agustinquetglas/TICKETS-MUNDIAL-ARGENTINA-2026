@@ -6,7 +6,7 @@ export class PedidosRepository {
     constructor(private readonly supabaseService: SupabaseService) { }
 
     async crearPedido(datosPedido: any) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { data, error } = await supabase
             .from('Pedidos')
             .insert(datosPedido)
@@ -22,7 +22,7 @@ export class PedidosRepository {
     }
 
     async actualizarEstadoPago(pedidoId: string, estado: string, referenciaPago: string) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { error } = await supabase
             .from('Pedidos')
             .update({

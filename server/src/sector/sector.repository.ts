@@ -37,7 +37,7 @@ export class SectorRepository {
     }
 
     async actualizarStock(sectorId: string, nuevoStock: number) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { error } = await supabase
             .from('Sector')
             .update({ Stock: nuevoStock })

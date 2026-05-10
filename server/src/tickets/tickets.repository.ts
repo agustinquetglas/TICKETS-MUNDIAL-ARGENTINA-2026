@@ -6,7 +6,7 @@ export class TicketsRepository {
     constructor(private readonly supabaseService: SupabaseService) {}
 
     async crearMultiplesTickets(tickets: any[]) {
-        const supabase = this.supabaseService.getClient();
+        const supabase = this.supabaseService.getAdminClient();
         const { error } = await supabase
             .from('Tickets')
             .insert(tickets);

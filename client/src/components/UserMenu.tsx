@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { createClient } from '../utils/supabase/client';
 
 export default function UserMenu() {
   const [userEmail, setUserEmail] = useState<string | null>(null);
@@ -26,8 +27,10 @@ export default function UserMenu() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem('user_email');
+    const supabase = createClient();
+    await supabase.auth.signOut();
     setOpen(false);
     router.push('/login');
   };
@@ -79,7 +82,7 @@ export default function UserMenu() {
             </svg>
             Mis entradas
           </Link>
-          <button className="user-dropdown-item user-dropdown-logout" onClick={handleLogout}>
+          <button type="button" className="user-dropdown-item user-dropdown-logout" onClick={() => { void handleLogout(); }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
               <polyline points="16 17 21 12 16 7" />

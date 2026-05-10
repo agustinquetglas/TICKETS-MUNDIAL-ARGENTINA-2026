@@ -25,17 +25,13 @@ export class MercadoPagoStrategy implements PaymentStrategy {
                         }
                     ],
 
-                    external_reference: String(ticketData.compraId || 'pedido-prueba')
+                    external_reference: String(ticketData.compraId || 'pedido-prueba'),
 
-                    /*
                     back_urls: {
                         success: 'http://localhost:3000/pago-exitoso',
                         failure: 'http://localhost:3000/pago-fallido',
                         pending: 'http://localhost:3000/pago-pendiente'
-                    },
-
-                    auto_return: 'approved',
-                    */
+                    }
 
                     /*
                     notification_url: 'http://localhost:3001/tickets/webhook/mercadopago'

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { createClient } from '../../utils/supabase/client';
 
 type View = 'login' | 'register' | 'forgot';
 
@@ -74,6 +75,14 @@ export default function PaginaLogin() {
 
     const data = await res.json();
     if (!res.ok) { setError(data.message || 'Error al iniciar sesión.'); setLoading(false); return; }
+
+    if (data.session) {
+      const supabase = createClient();
+      await supabase.auth.setSession({
+        access_token: data.session.access_token,
+        refresh_token: data.session.refresh_token,
+      });
+    }
 
     setLoading(false);
     localStorage.setItem('user_email', email);
