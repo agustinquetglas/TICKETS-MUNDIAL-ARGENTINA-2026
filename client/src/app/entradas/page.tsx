@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { createClient } from '../../utils/supabase/client';
@@ -14,7 +14,7 @@ type SectorDB = {
   partido_id: number;
 };
 
-export default function PaginaCompra() {
+function PaginaCompraContent() {
   const [sectores, setSectores] = useState<SectorDB[]>([]);
   const [sectorSeleccionado, setSectorSeleccionado] = useState<SectorDB | null>(null);
   const [cantidad, setCantidad] = useState<number>(1);
@@ -111,8 +111,6 @@ export default function PaginaCompra() {
   const onClickComprar = () => {
     void handleComprar();
   };
-
-
 
   return (
     <main className="main-compra">
@@ -231,5 +229,13 @@ export default function PaginaCompra() {
         </button>
       </div>
     </main>
+  );
+}
+
+export default function PaginaCompra() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <PaginaCompraContent />
+    </Suspense>
   );
 }
