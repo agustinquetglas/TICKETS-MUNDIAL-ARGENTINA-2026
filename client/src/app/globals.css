@@ -13,6 +13,9 @@
     --btn-primary-text: #ffffff;
     --header-btn-bg: #ffffff;
     --header-btn-text: #000000;
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --nav-border: #e5e7eb;
+    --nav-text: #000000;
 }
 
 .dark {
@@ -28,6 +31,65 @@
     --btn-primary-text: #000000;
     --header-btn-bg: rgba(255, 255, 255, 0.1);
     --header-btn-text: #ffffff;
+    --nav-bg: rgba(15, 23, 42, 0.8);
+    --nav-border: #334155;
+    --nav-text: #ffffff;
+}
+
+/* ========== GLOBAL NAVBAR ========== */
+.global-navbar {
+    width: 100%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--nav-border);
+    padding: 0.75rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.navbar-title {
+    color: var(--nav-text);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.navbar-logo:hover .navbar-title {
+    color: #74acdf;
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .navbar-title {
+        display: none;
+    }
 }
 
 * {
@@ -439,200 +501,265 @@ h1 {
 
 /* ========== Seleccion de entradas (Mobile First) ========== */
 
+/* ========== Seleccion de entradas (New Layout) ========== */
+
 .main-compra {
     width: 100%;
-    overflow-x: hidden;
-    padding: 0;
-}
-
-.compra-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
     display: flex;
     flex-direction: column;
+    min-height: 80vh;
+}
+
+.compra-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .compra-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.compra-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.compra-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    padding: 0 1rem;
+    height: 4px;
+    background: linear-gradient(to right, #74acdf, #ffffff, #74acdf);
 }
 
-.sector {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-top: 1.5rem;
-}
-
-.label-sector {
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-decoration: underline;
+.label-sector, .label-precio, .label-cantidad {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
 .selector-sector {
-    padding: 0.5rem;
-    border: 2px solid var(--card-border);
+    width: 100%;
+    padding: 0.85rem;
+    border: 2px solid var(--input-border);
     background-color: var(--input-bg);
     color: var(--input-text);
-    border-radius: 4px;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 200px;
-}
-
-.box-precio {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-top: 1.5rem;
-}
-
-.label-precio {
+    border-radius: 12px;
     font-size: 1.1rem;
-    font-weight: bold;
-    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.selector-sector:focus {
+    border-color: #74acdf;
+    box-shadow: 0 0 0 4px rgba(116, 172, 223, 0.2);
+    outline: none;
 }
 
 .precio {
-    font-size: 1rem;
-}
-
-.box-cantidad {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    margin-top: 1.5rem;
-}
-
-.label-cantidad {
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-decoration: underline;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--text-color);
+    margin: 0;
 }
 
 .cantidad-container {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    margin-top: 0.5rem;
-    border: 2px solid var(--card-border);
+    background-color: var(--input-bg);
+    border: 2px solid var(--input-border);
+    border-radius: 12px;
     width: fit-content;
+    overflow: hidden;
 }
 
 .btn-cantidad {
-    padding: 0.3rem 0.6rem;
-    font-size: 1.1rem;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: var(--card-bg);
-    color: var(--text-color);
+    background: none;
     border: none;
-    border-radius: 0;
+    color: var(--text-color);
+    padding: 0.8rem 1.5rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.btn-cantidad:active {
-    background-color: #e0e0e0;
+.btn-cantidad:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .cantidad-numero {
-    padding: 0.3rem 1.2rem;
-    font-size: 1.1rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: 800;
+    min-width: 50px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.total-box {
+    margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed var(--card-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-box p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+}
+
+.total-amount {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #22c55e; /* Success green */
+    margin: 0;
+}
+
+.estadio-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+}
+
+.img-estadio {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    filter: drop-shadow(0 15px 30px rgba(0,0,0,0.3));
+    transition: transform 0.3s ease;
+}
+
+.img-estadio:hover {
+    transform: scale(1.02);
 }
 
 .referencias {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    width: 100%;
 }
 
 .referencia-box {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
-}
-
-.referencia-box p {
-    margin: 0;
-    font-size: 0.85rem;
+    gap: 0.75rem;
 }
 
 .color-ref {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
     flex-shrink: 0;
 }
 
 .vip-color {
     background-color: #ff8c00;
-    border: 1px solid #000000;
 }
 
 .platea-color {
     background-color: #000000;
-    border: 1px solid #000000;
 }
 
 .popular-color {
     background-color: #ff69b4;
-    border: 1px solid #000000;
 }
 
 .nodisponible-color {
     background-color: #ffffff;
-    border: 1px solid #000000;
+    border: 1px solid #ddd;
 }
 
-.img-estadio {
+
+.compra-acciones {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
     width: 100%;
-    max-width: 350px;
-    height: auto;
-    margin-top: 1.5rem;
-    align-self: center;
 }
 
 .btn-continuar {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 0.7rem;
+    background: linear-gradient(135deg, #74acdf 0%, #1e3a8a 100%);
+    color: white;
+    padding: 1.25rem 4rem;
+    border-radius: 100px;
+    font-size: 1.25rem;
+    font-weight: 800;
     border: none;
-    border-radius: 0.4rem;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 1.5rem 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(30, 58, 138, 0.4);
     width: 100%;
-    max-width: 350px;
-    align-self: center;
+    max-width: 450px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
-.btn-continuar:active {
-    opacity: 0.7;
+.btn-continuar:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(30, 58, 138, 0.6);
+    filter: brightness(1.1);
 }
 
 .btn-cancelar {
-    background-color: #dc2626;
-    color: #ffffff;
-    padding: 0.7rem;
-    border: none;
-    border-radius: 0.4rem;
+    background: transparent !important;
+    color: #ef4444 !important;
+    padding: 0.8rem 2.5rem;
+    font-weight: 700;
+    border: 2px solid #ef4444 !important;
+    border-radius: 100px;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0 0 1.5rem 0;
-    width: 100%;
-    max-width: 350px;
-    align-self: center;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn-cancelar:hover {
-    background-color: #b91c1c;
+    background: #ef4444 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
 }
 
-.btn-cancelar:active {
-    opacity: 0.7;
-}
+
+
 
 /* ========== MIS ENTRADAS (Compras Realizadas) ========== */
 

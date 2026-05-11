@@ -81,11 +81,6 @@ export default function Page() {
 
   return (
     <>
-      <header className="header">
-        <DarkModeToggle />
-        <UserMenu />
-      </header>
-
       <main style={{ paddingBottom: "4rem" }}>
         <div
           style={{
