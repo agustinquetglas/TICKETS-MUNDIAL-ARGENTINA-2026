@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-export default function PagoExitoso() {
+function PagoExitosoContent() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get('payment_id');
   const [confirmado, setConfirmado] = useState(false);
@@ -26,12 +26,20 @@ export default function PagoExitoso() {
 
       <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
         <Link href="/compras-realizadas">
-          <button>Mis Entradas</button>
+          <button className="btn-cancelar" style={{ borderColor: '#22c55e', color: '#22c55e' }}>Mis Entradas</button>
         </Link>
         <Link href="/">
-          <button>Inicio</button>
+          <button className="btn-continuar" style={{ maxWidth: '200px' }}>Inicio</button>
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function PagoExitoso() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <PagoExitosoContent />
+    </Suspense>
   );
 }
