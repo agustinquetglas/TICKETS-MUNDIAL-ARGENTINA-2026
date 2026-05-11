@@ -43,17 +43,18 @@ export class TicketsService {
 
         const montoTotal = sector.precio_sector * cantidadAComprar;
 
-        // Validación de Saldo
+        // Validación de Saldo (solo si el campo existe en la DB)
         const usuario = await this.usuariosRepo.obtenerUsuarioPorId(usuarioId);
         if (!usuario) {
             throw new BadRequestException('Usuario no encontrado.');
         }
 
-        // Si la columna Saldo existe, validamos. Si no existe (undefined/null), asumimos que no tiene saldo suficiente para comprar
-        // o que la tabla no está preparada, pero por requerimiento "si no le alcanza la plata que no te deje"
-        const saldoUsuario = usuario.Saldo !== undefined ? usuario.Saldo : 0;
-        if (saldoUsuario < montoTotal) {
-            throw new BadRequestException(`Saldo insuficiente. Tu saldo actual es de USD ${saldoUsuario} y el total es USD ${montoTotal}.`);
+        // Si el usuario tiene un saldo definido (no es null ni undefined), validamos.
+        // Si no tiene el campo definido, permitimos la compra para no bloquear el flujo real de Mercado Pago.
+        if (usuario.Saldo !== null && usuario.Saldo !== undefined) {
+            if (usuario.Saldo < montoTotal) {
+                throw new BadRequestException(`Saldo insuficiente. Tu saldo actual es de USD ${usuario.Saldo} y el total es USD ${montoTotal}.`);
+            }
         }
 
         try {
