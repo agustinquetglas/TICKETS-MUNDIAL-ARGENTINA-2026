@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await page.goto('/');
  
   await page.evaluate(() => {
@@ -132,7 +132,7 @@ test.describe('Página Principal - Con sesión', () => {
   test('debería mostrar el menú al clickear el avatar', async ({ page }) => {
     await page.goto('/');
     await page.click('.user-avatar-btn');
-    await expect(page.locator('text=Cerrar sesión')).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole('button', { name: 'Cerrar sesión' })).toBeVisible({ timeout: 5000 });
   });
 
   test('debería cerrar sesión al clickear Cerrar sesión', async ({ page }) => {
@@ -143,7 +143,7 @@ test.describe('Página Principal - Con sesión', () => {
     await page.goto('/');
     // Abrir el dropdown primero
     await page.click('.user-avatar-btn');
-    await page.click('text=Cerrar sesión');
+    await page.getByRole('button', { name: 'Cerrar sesión' }).click();
     // Después de cerrar sesión redirige a /login
     await expect(page).toHaveURL(/.*login.*/, { timeout: 5000 });
   });
@@ -151,7 +151,7 @@ test.describe('Página Principal - Con sesión', () => {
   test('debería mostrar link a Mis entradas en el menú', async ({ page }) => {
     await page.goto('/');
     await page.click('.user-avatar-btn');
-    await expect(page.locator('text=Mis entradas')).toBeVisible({ timeout: 5000 });
+    await expect(page.getByRole('link', { name: 'Mis entradas' })).toBeVisible({ timeout: 5000 });
   });
 
 });

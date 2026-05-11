@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Pago Exitoso', () => {
 
   test('debería mostrar mensaje de pago exitoso', async ({ page }) => {
-    await page.route(/\/tickets\/confirmar\/.*/, async route => {
+    await page.route(/\/tickets\/confirm\/.*/, async route => {
       await route.fulfill({ status: 200, body: '{}' });
     });
 
@@ -13,7 +13,7 @@ test.describe('Pago Exitoso', () => {
 
   test('debería confirmar el pago en el backend con el payment_id', async ({ page }) => {
     let urlConfirmada = '';
-    await page.route(/\/tickets\/confirmar\/.*/, async route => {
+    await page.route(/\/tickets\/confirm\/.*/, async route => {
       urlConfirmada = route.request().url();
       await route.fulfill({ status: 200, body: '{}' });
     });
@@ -25,7 +25,7 @@ test.describe('Pago Exitoso', () => {
   });
 
   test('debería mostrar mensaje de confirmación después de confirmar', async ({ page }) => {
-    await page.route(/\/tickets\/confirmar\/.*/, async route => {
+    await page.route(/\/tickets\/confirm\/.*/, async route => {
       await route.fulfill({ status: 200, body: '{}' });
     });
 
@@ -34,7 +34,7 @@ test.describe('Pago Exitoso', () => {
   });
 
   test('debería tener botón para ir a Mis Entradas', async ({ page }) => {
-    await page.route(/\/tickets\/confirmar\/.*/, async route => {
+    await page.route(/\/tickets\/confirm\/.*/, async route => {
       await route.fulfill({ status: 200, body: '{}' });
     });
 
@@ -44,7 +44,7 @@ test.describe('Pago Exitoso', () => {
   });
 
   test('debería tener botón para volver al inicio', async ({ page }) => {
-    await page.route(/\/tickets\/confirmar\/.*/, async route => {
+    await page.route(/\/tickets\/confirm\/.*/, async route => {
       await route.fulfill({ status: 200, body: '{}' });
     });
 
