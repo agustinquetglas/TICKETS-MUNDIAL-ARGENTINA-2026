@@ -112,9 +112,9 @@ export default function PaginaMisEntradas() {
                                     <p>{reservaId}</p>
                                     <p>{formatearFecha(pedido.fecha_compra)}</p>
                                     {pedido.estado_pago === 'PAGADO' ? (
-                                        <button className="btn-comprobante" onClick={() => alert('Próximamente: ver comprobante')}>
+                                        <Link href={`/comprobante/${pedido.id}`} className="btn-comprobante" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                             comprobante
-                                        </button>
+                                        </Link>
                                     ) : (
                                         <span style={{ color: 'orange', fontWeight: 'bold', justifySelf: 'center' }}>
                                             {pedido.estado_pago}
