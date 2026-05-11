@@ -6,11 +6,13 @@ TICKETS-MUNDIAL-ARGENTINA-2026/
 ├── client/   → Frontend (Next.js)
 └── server/   → Backend (NestJS + Supabase)
 
-## Integrantes
+## Autores
 
-| Nombre | Rol |
-
-| _(completar)_ | Backend |
-| _(completar)_ | Frontend |
-| _(completar)_ | Base de datos |
-| _(completar)_ | Tester |
+- Agustín Quetlas
+- Máximo Repka
+- Juan Benítez
+- Santino Mortola
+- Matías Constantini
+- Bautista Goya
+- Lautaro Stach
+- Tomás Segovia
