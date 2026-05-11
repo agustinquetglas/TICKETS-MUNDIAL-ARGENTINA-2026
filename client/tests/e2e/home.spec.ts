@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
 
+beforeEach(async ({ page }) => {
+  await page.goto('/');
+ 
+  await page.evaluate(() => {
+    localStorage.setItem('user_email', 'test@test.com');
+  });
+  await page.reload(); 
+});
+
 const SUPABASE_KEY = 'sb-zgapcaehmhnqdbfwogxt-auth-token';
 
 const mockSession = {
