@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { createClient } from '../../../utils/supabase/client';
 import { QRCodeSVG } from 'qrcode.react';
 import Link from 'next/link';
@@ -9,7 +9,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export default function ComprobantePage() {
     const params = useParams();
-    const router = useRouter();
+
     const pedidoId = params.id as string;
     
     const [pedido, setPedido] = useState<any>(null);
@@ -17,7 +17,7 @@ export default function ComprobantePage() {
     const [error, setError] = useState('');
     const [originUrl, setOriginUrl] = useState('http://localhost:3000');
 
-    const supabase = createClient();
+
 
     useEffect(() => {
         let origin = window.location.origin;
@@ -27,6 +27,7 @@ export default function ComprobantePage() {
         }
         setOriginUrl(origin);
 
+        const supabase = createClient();
         const fetchPedido = async () => {
             try {
                 const { data: { user } } = await supabase.auth.getUser();
@@ -54,7 +55,7 @@ export default function ComprobantePage() {
         };
 
         if (pedidoId) {
-            fetchPedido();
+            void fetchPedido();
         }
     }, [pedidoId]);
 

@@ -25,9 +25,10 @@ export default function PaginaMisEntradas() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const supabase = createClient();
+
 
     useEffect(() => {
+        const supabase = createClient();
         const fetchMisEntradas = async () => {
             try {
                 const { data: { user } } = await supabase.auth.getUser();
@@ -55,7 +56,7 @@ export default function PaginaMisEntradas() {
             }
         };
 
-        fetchMisEntradas();
+        void fetchMisEntradas();
     }, []);
 
     const formatearFecha = (fechaStr: string) => {

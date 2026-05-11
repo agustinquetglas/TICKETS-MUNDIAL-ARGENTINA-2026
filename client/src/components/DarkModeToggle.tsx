@@ -27,8 +27,9 @@ export default function DarkModeToggle() {
   };
 
   return (
-    <button 
-      onClick={toggleDarkMode} 
+    <button
+      type="button"
+      onClick={toggleDarkMode}
       className="btn-dark-mode"
       aria-label="Cambiar modo oscuro"
     >

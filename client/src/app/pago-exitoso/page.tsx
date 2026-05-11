@@ -40,12 +40,12 @@ function PagoExitosoContent() {
 
             <div style={{ marginTop: '3rem', display: 'flex', gap: '1rem' }}>
                 <Link href="/compras-realizadas">
-                    <button className="btn-comprobante" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
+                    <button type="button" className="btn-comprobante" style={{ padding: '1rem 2rem', fontSize: '1rem' }}>
                         Mis Entradas
                     </button>
                 </Link>
                 <Link href="/">
-                    <button className="btn-volver" style={{ position: 'relative', top: 0, left: 0, padding: '1rem 2rem', fontSize: '1rem' }}>
+                    <button type="button" className="btn-volver" style={{ position: 'relative', top: 0, left: 0, padding: '1rem 2rem', fontSize: '1rem' }}>
                         Inicio
                     </button>
                 </Link>

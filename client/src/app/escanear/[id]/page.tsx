@@ -41,6 +41,7 @@ export default function EscanearPage() {
                     </div>
                     
                     <button 
+                        type="button"
                         onClick={handleScan}
                         onTouchEnd={handleScan}
                         disabled={loadingScan}
@@ -82,6 +83,7 @@ export default function EscanearPage() {
                     </div>
                     
                     <button 
+                        type="button"
                         onClick={() => setScanned(false)}
                         style={{
                             marginTop: '2rem',

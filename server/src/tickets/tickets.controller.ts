@@ -26,7 +26,7 @@ export class TicketsController {
         try {
             const urlPago = await processor.processTicketPayment(datosCompra);
             return { url: urlPago };
-        } catch (error) {
+        } catch (_error) {
             throw new HttpException('Falló la generación del checkout', HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
