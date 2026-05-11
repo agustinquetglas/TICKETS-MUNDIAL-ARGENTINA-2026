@@ -1,0 +1,130 @@
+[33mbaf773f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fix vercel 3
+[33m7842072[m fix vercel 2
+[33m3adf99f[m fix vercel
+[33m963f4e4[m Cambios interfaz compra/navbar
+[33mb57e9a9[m eliminando archivos innecesarios
+[33m35495cc[m Verificando tests playwright
+[33mead7bd8[m Refactor PagoExitoso component and improve payment confirmation logic; add user email to localStorage in e2e tests
+[33ma38783f[m change json
+[33mcc3b0d1[m Fix client
+[33mfc6fcc8[m Exclude client/package-lock.json from Codacy insecure dependency finding
+[33m45a8eba[m Fix Codacy in home page: remove unused supabase, replace img with next/image
+[33md0e06f6[m Exclude server/test-buy.js from Codacy HTTP security check
+[33mcf50321[m Add Codacy config to exclude Next.js client app/components from analysis
+[33m3b4fee5[m Fix Codacy a11y: add non-empty SVG titles and mark icons aria-hidden
+[33m84244ea[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33mdffb90e[m fix de header
+[33md771103[m Fix Codacy findings in UserMenu: reuse supabase client and add button types
+[33m9fac5fb[m README.md
+[33mdfa55e4[m prueba
+[33ma441551[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33mfd31077[m Arrelgos mp
+[33me45be23[m Amoldar código de localhost para levantar app a web
+[33m98328d6[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33mc41a12e[m agregado de tests
+[33m98175f5[m add test-results/ en el gitignore
+[33m8bbd6a4[m Add de test de pagos
+[33me397d7b[m add de test de entradas
+[33m86102bb[m add de tests login
+[33mb566e81[m Add y Update de Tests con playwright
+[33m43ead0f[m Prueba Interfaz comprobante de entrada y qr
+[33m415872a[m solucion paso final ojala
+[33mc233ffd[m solucion paso 3
+[33mc974dc1[m solucion paso 2
+[33m5ebcbe4[m solucion de comprobantes paso 1
+[33m028603f[m Conexión interfaz "mis entradas" con supabase
+[33m634770a[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33me1145bf[m Arreglos mp
+[33m295d452[m README.md
+[33m0a153db[m hice un poco mas ancho el header de la copa del mundo
+[33mdaec023[m ajuste de las tarjetas de partido para desktop
+[33m60cd44c[m Revert "prueba, fix sectores"
+[33m6212b7e[m prueba
+[33mabb2b3c[m[33m ([m[1;31morigin/prueba-sector[m[33m, [m[1;32mprueba-sector[m[33m)[m prueba, fix sectores
+[33m4f29bf0[m Arreglos
+[33m6aaa0dc[m Merge pull request #3 from matsir-2110/feature/frontend-tailwind-redesign
+[33mc7a38a2[m[33m ([m[1;31morigin/feature/frontend-tailwind-redesign[m[33m)[m fix: eslint v9 y dependencias cliente
+[33md92767b[m fix: configurar eslint en cliente
+[33md6ec3bd[m fix: agregar jest y dependencias de testing al servidor
+[33mfa89831[m fix: lint config y tests de servidor
+[33mf2cf492[m Fix: corregir ruta de lint y capitalizar PaymentStrategy
+[33m00dc1c3[m chore: add tsbuildinfo file to server build directory
+[33m774192c[m interfaz de entrada finalizada
+[33m684a1ae[m sigo acomodando la pagina principal de entradas
+[33m4b4ff45[m vuelvo al estilo viejo para rediseño
+[33mb6315ca[m creacion de getEstadio para mostrar donde se juegan los partidos y acomodo fecha y hora
+[33m281c9aa[m cambio de escudos (y eliminacion de brasil) por banderas para mayor claridad
+[33m0ebbdc3[m mejora visual de la ventana principal con Tailwind y Lovable
+[33m62548a5[m rediseño con Tailwind css
+[33m85631e0[m Fix, error de precio base en inicio y en interfaz de comprar, no se mostraban los sectores
+[33m9594d1b[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33m2581496[m Agrega formulario para actualizar contraseña en la página de inicio de sesión
+[33m25bf9e5[m Conectar nueva interfaz
+[33m7af158b[m Cree la interfaz de la pagina de ver mis entradas
+[33mf28b6ca[m fix para que funcione la api
+[33m58fdc0a[m add de gemini cli
+[33mb7ca0ae[m Arregle error de apellido en el back
+[33m4fae546[m Metodo builder tickets
+[33mbffd419[m Se arregla controller de tickets y su display de sector en front
+[33m6aefa06[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33m81b2437[m Arreglo Error carpeta dist y del fetch
+[33m21f45cd[m Saque apellido
+[33m168db3b[m Agregue nuevos campos en la parte de register
+[33m9d67f78[m Integracion con el mismisimo MP
+[33m9daa55b[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33m3aee14d[m borro el formato del ticket porque ya no se usa
+[33mfa57329[m Agregue nuevo header y cambie el diseño del boton de oscuro/claro
+[33mac4e0cb[m modifico page.tsx y realizo una llamada correcta al backend
+[33m548982e[m modificacion en mercadoPagoStrategy
+[33m1b35296[m vuelvo a añadir .env y corrijo la url del pago
+[33m0c93048[m Agregado del modulo de sector y exporto el repositorio para usarlo en tickets
+[33m1173e09[m Agregado del repositorio de Sector para manejar precio y stock
+[33md6508ce[m se agrega sectorModule y sectorRepository
+[33mb56041a[m Se actualiza sector a sectorId para que coincida con el dto corregido
+[33me592b61[m La logica de precio y stock ahora pasa a sector
+[33m2d7f33a[m Sector pasa a llamarse sectorId y se valida como UUID
+[33m060a2e0[m Se elimina actualizarStock porque el stock ahora esta en sector, no en partido
+[33m862410d[m Elimino precio_base y stock_disponible
+[33m7b14e35[m Merge pull request #2 from matsir-2110/frontend
+[33m7e8d691[m primera ampliacion de la estructura de actualizar contraseña
+[33m6fb25cc[m[33m ([m[1;31morigin/frontend[m[33m)[m agregue boton para cambiar a modo oscuro/claro
+[33md6bdea5[m estructura para el formulario de actualizar contraseña
+[33mb8ce794[m creacion de carpeta para actualizar contrañesa
+[33mbca9287[m agregue nuevo header
+[33m35958cc[m Merge funcionalidad verig login-reg
+[33mc0f6953[m Agrego funcionalidad verif login-register
+[33mcb648dd[m feat: agregar boton de cancelar en vista de entradas
+[33m18dddfe[m implementado de  contexto del patrón State en la clase Ticket
+[33m4007f8e[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33mf886ca2[m Cambios en archivos
+[33m825bd73[m implemente estado ExpiradoState
+[33ma319ed4[m implemente estado CanceladoState
+[33m5faa3d8[m implemente estado PagadoState
+[33mb505278[m implemente estado PendienteState
+[33m92fcf2b[m agregado de interfaz base para el patrón State
+[33m00b800f[m adicion de lint: npx tsc --noEmit
+[33m9704650[m correccion total de errores
+[33md17524c[m arreglo algunos errores
+[33m5c7bdf0[m confirmacion de pago
+[33me168de7[m Envio un mail con la notificacion del pago
+[33m625ccb0[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33m39f2128[m Creo observer y empiezo a implementarlo
+[33m5d5aeb1[m fix
+[33m29fa6b0[m Update main.ts with new server configuration
+[33m93aa9cf[m Update page.tsx with new content
+[33m91da33b[m Updated the page.tsx file for login functionality.
+[33mdb422cb[m Fix SupabaseKey de client
+[33mf807491[m .env.local agregado en cliente, se arregla error que no se mostraba pagina en localhost
+[33m2d4c927[m Merge branch 'main' of https://github.com/matsir-2110/TICKETS-MUNDIAL-ARGENTINA-2026
+[33mdb1bddb[m configuración y dependencias
+[33ma28bf0c[m páginas de retorno de pago
+[33madad9a1[m integración Mercado Pago
+[33mff69913[m Elimine los headers salvo en la pagina principal
+[33m3f2c78a[m Correccion
+[33m08df833[m Creado de PaymentProcessor para inyectar y ejecutar la estrategia de pago
+[33m03487fd[m Setup de pasarela de pagos con Mercado Pago aplicando patron Strategy
+[33m283f6d3[m Creado de carpeta payments para la integracion con mercado pago
+[33ma3efd67[m adaptacion del box login para dispositivos moviles
+[33md068a66[m ajuste de box, imagen y cambio de fuente
+[33m5062eea[m primer mejora de login, cambio de imagen
+[33m817236d[m Agruegue boton para registrase y a
