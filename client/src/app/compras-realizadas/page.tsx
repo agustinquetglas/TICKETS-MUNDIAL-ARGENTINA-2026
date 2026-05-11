@@ -18,6 +18,7 @@ type Pedido = {
         };
     }>;
 };
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export default function PaginaMisEntradas() {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
@@ -38,12 +39,12 @@ export default function PaginaMisEntradas() {
 
                 try {
                     // Sincronizamos con MercadoPago por si el usuario no pasó por la pantalla de pago exitoso
-                    await fetch(`http://localhost:3001/tickets/sincronizar-pagos/${user.id}`);
+                    await fetch(`${API_URL}/tickets/sincronizar-pagos/${user.id}`);
                 } catch (e) {
                     console.error('Error sincronizando pagos', e);
                 }
 
-                const res = await fetch(`http://localhost:3001/tickets/mis-entradas/${user.id}`);
+                const res = await fetch(`${API_URL}/tickets/mis-entradas/${user.id}`);
                 if (!res.ok) throw new Error('Error al obtener las reservas');
                 const data = await res.json();
                 setPedidos(data);
@@ -99,8 +100,8 @@ export default function PaginaMisEntradas() {
                         {pedidos.map((pedido) => {
                             // Asumimos que todos los tickets de un pedido son para el mismo partido
                             const partido = pedido.Tickets[0]?.Partidos;
-                            const tituloPartido = partido 
-                                ? `${partido.equipo_a} vs ${partido.equipo_b}` 
+                            const tituloPartido = partido
+                                ? `${partido.equipo_a} vs ${partido.equipo_b}`
                                 : 'Partido desconocido';
 
                             // Recortamos el ID del pedido para mostrar un número de reserva más corto
