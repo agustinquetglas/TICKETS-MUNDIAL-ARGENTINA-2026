@@ -1,14 +1,10 @@
 'use client';
 
-export const dynamic = 'force-dynamic';
-
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-
-function PagoExitosoContent() {
+export default function PagoExitoso() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get('payment_id');
   const [confirmado, setConfirmado] = useState(false);
@@ -16,7 +12,7 @@ function PagoExitosoContent() {
   useEffect(() => {
     if (!paymentId) return;
 
-    fetch(`${API_URL}/tickets/confirm/${paymentId}`, {
+    fetch(`http://127.0.0.1:3001/tickets/confirm/${paymentId}`, {
       method: 'POST',
     })
       .then(() => setConfirmado(true))
@@ -30,20 +26,12 @@ function PagoExitosoContent() {
 
       <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
         <Link href="/compras-realizadas">
-          <button className="btn-cancelar" style={{ borderColor: '#22c55e', color: '#22c55e' }}>Mis Entradas</button>
+          <button>Mis Entradas</button>
         </Link>
         <Link href="/">
-          <button className="btn-continuar" style={{ maxWidth: '200px' }}>Inicio</button>
+          <button>Inicio</button>
         </Link>
       </div>
     </div>
-  );
-}
-
-export default function PagoExitoso() {
-  return (
-    <Suspense fallback={<div>Cargando...</div>}>
-      <PagoExitosoContent />
-    </Suspense>
   );
 }

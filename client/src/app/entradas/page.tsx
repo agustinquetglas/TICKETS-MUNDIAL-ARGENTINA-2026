@@ -116,131 +116,118 @@ function PaginaCompraContent() {
 
   return (
     <>
+      <header className="header">
+        <DarkModeToggle />
+        <UserMenu />
+      </header>
       <main className="main-compra">
-        <h2 className="titulo" style={{ marginTop: '2rem', fontSize: '1.8rem', letterSpacing: '2px' }}>SELECCIONÁ TUS ENTRADAS</h2>
+        <h2 className="titulo">SELECCIONÁ TUS ENTRADAS</h2>
 
-        <div className="compra-layout">
-          {/* LADO IZQUIERDO: SELECCIÓN */}
-          <div className="compra-card">
-            {mensaje ? (
-              <p className="compra-msg compra-msg--ok" role="status">
-                {mensaje}
-              </p>
-            ) : null}
+        <div className="compra-container">
+          {mensaje ? (
+            <p className="compra-msg compra-msg--ok" role="status">
+              {mensaje}
+            </p>
+          ) : null}
 
-            {error ? (
-              <p className="compra-msg compra-msg--error" role="alert">
-                {error}
-              </p>
-            ) : null}
+          {error ? (
+            <p className="compra-msg compra-msg--error" role="alert">
+              {error}
+            </p>
+          ) : null}
 
-            <div className="sector">
-              <label className="label-sector" htmlFor="sector">
-                Sector
-              </label>
-              {loadingSectores ? (
-                <p>Cargando sectores...</p>
-              ) : (
-                <select
-                  id="sector"
-                  className="selector-sector"
-                  value={sectorSeleccionado?.id || ''}
-                  onChange={(e) => {
-                    const s = sectores.find((sec) => sec.id === e.target.value);
-                    if (s) setSectorSeleccionado(s);
-                  }}
-                >
-                  {sectores.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.nombre_sector}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
+          <div className="sector">
+            <label className="label-sector" htmlFor="sector">
+              Sector
+            </label>
+            {loadingSectores ? (
+              <p>Cargando sectores...</p>
+            ) : (
+              <select
+                id="sector"
+                className="selector-sector"
+                value={sectorSeleccionado?.id ?? ''}
+                onChange={(e) => {
+                  const found = sectores.find((s) => s.id === e.target.value);
+                  setSectorSeleccionado(found ?? null);
+                }}
+              >
+                {sectores.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.nombre_sector}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
 
-            <div className="box-precio">
-              <p className="label-precio">Precio por entrada</p>
-              <p className="precio">
-                {sectorSeleccionado ? `USD ${sectorSeleccionado.precio_sector}` : '—'}
-              </p>
-            </div>
+          <div className="box-precio">
+            <p className="label-precio">Precio por entrada</p>
+            <p className="precio">USD {sectorSeleccionado?.precio_sector ?? '—'}</p>
+          </div>
 
-            <div className="box-cantidad">
-              <label className="label-cantidad">Cantidad de entradas</label>
-              <div className="cantidad-container">
-                <button
-                  type="button"
-                  className="btn-cantidad"
-                  onClick={() => setCantidad(Math.max(1, cantidad - 1))}
-                >
-                  −
-                </button>
-                <span className="cantidad-numero">{cantidad}</span>
-                <button
-                  type="button"
-                  className="btn-cantidad"
-                  onClick={() => setCantidad(Math.min(6, cantidad + 1))}
-                >
-                  +
-                </button>
-              </div>
-              <p style={{ fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.5rem' }}>
-                Máximo 6 por persona
-              </p>
-            </div>
-
-            <div className="total-box">
-               <p>A pagar:</p>
-               <h3 className="total-amount">Total: ${sectorSeleccionado ? sectorSeleccionado.precio_sector * cantidad : 0}</h3>
+          <div className="box-cantidad">
+            <p className="label-cantidad">Cantidad de entradas</p>
+            <div className="cantidad-container">
+              <button
+                type="button"
+                className="btn-cantidad"
+                onClick={() => {
+                  setCantidad(Math.max(1, cantidad - 1));
+                }}
+              >
+                −
+              </button>
+              <span className="cantidad-numero">{cantidad}</span>
+              <button
+                type="button"
+                className="btn-cantidad"
+                onClick={() => {
+                  setCantidad(Math.min(6, cantidad + 1));
+                }}
+              >
+                +
+              </button>
             </div>
           </div>
 
-          {/* LADO DERECHO: MAPA Y REFERENCIAS */}
-          <div className="estadio-container">
-            <Image
-              src="/estadio.png"
-              alt="Estadio"
-              width={450}
-              height={300}
-              className="img-estadio"
-              priority
-            />
-            <div className="referencias">
-              <div className="referencia-box">
-                <span className="color-ref vip-color"></span>
-                <p>VIP</p>
-              </div>
-              <div className="referencia-box">
-                <span className="color-ref platea-color"></span>
-                <p>Platea</p>
-              </div>
-              <div className="referencia-box">
-                <span className="color-ref popular-color"></span>
-                <p>Popular</p>
-              </div>
-              <div className="referencia-box">
-                <span className="color-ref nodisponible-color"></span>
-                <p>No disponible</p>
-              </div>
+          <div className="referencias">
+            <div className="referencia-box">
+              <span className="color-ref vip-color"></span>
+              <p>VIP</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref platea-color"></span>
+              <p>Platea</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref popular-color"></span>
+              <p>Popular</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref nodisponible-color"></span>
+              <p>No disponible</p>
             </div>
           </div>
-        </div>
 
-        <div className="compra-acciones">
-          <button
-            type="button"
-            className="btn-continuar"
-            onClick={onClickComprar}
-            disabled={loading || !sectorSeleccionado}
-          >
-            {loading ? 'Procesando...' : 'CONTINUAR AL PAGO →'}
+          <Image
+            className="img-estadio"
+            src="/estadio.png"
+            alt="Estadio"
+            width={900}
+            height={450}
+            priority
+          />
+
+          <button type="button" className="btn-continuar" onClick={onClickComprar} disabled={loading}>
+            {loading ? 'PROCESANDO...' : 'CONTINUAR →'}
           </button>
 
           <button
             type="button"
             className="btn-cancelar"
-            onClick={() => router.push('/')}
+            onClick={() => router.back()}
+            disabled={loading}
           >
             CANCELAR
           </button>

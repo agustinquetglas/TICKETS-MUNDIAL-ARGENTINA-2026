@@ -14,19 +14,14 @@ export const metadata: Metadata = {
   description: "Comprá tus entradas para el Mundial Argentina 2026",
 };
 
-import Navbar from "../components/Navbar";
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={spaceGrotesk.variable} suppressHydrationWarning>
-      <body className="antialiased">
-        <Navbar />
-        {children}
-      </body>
+    <html lang="es" className={spaceGrotesk.variable}>
+      <body>{children}</body>
     </html>
   );
 }
