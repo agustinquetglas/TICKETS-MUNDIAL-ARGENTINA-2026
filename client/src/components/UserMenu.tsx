@@ -10,6 +10,7 @@ export default function UserMenu() {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const supabase = createClient();
 
   useEffect(() => {
     const email = localStorage.getItem('user_email');
@@ -27,9 +28,8 @@ export default function UserMenu() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     localStorage.removeItem('user_email');
-    const supabase = createClient();
     await supabase.auth.signOut();
     setOpen(false);
     router.push('/login');
@@ -49,8 +49,11 @@ export default function UserMenu() {
   return (
     <div className="user-menu-wrapper" ref={menuRef}>
       <button
+        type="button"
         className="user-avatar-btn"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          setOpen((prev) => !prev);
+        }}
         aria-label="Menú de usuario"
         aria-expanded={open}
       >
@@ -74,7 +77,9 @@ export default function UserMenu() {
           <Link
             href="/compras-realizadas"
             className="user-dropdown-item"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+            }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -82,7 +87,13 @@ export default function UserMenu() {
             </svg>
             Mis entradas
           </Link>
-          <button type="button" className="user-dropdown-item user-dropdown-logout" onClick={() => { void handleLogout(); }}>
+          <button
+            type="button"
+            className="user-dropdown-item user-dropdown-logout"
+            onClick={() => {
+              void handleLogout();
+            }}
+          >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
               <polyline points="16 17 21 12 16 7" />
