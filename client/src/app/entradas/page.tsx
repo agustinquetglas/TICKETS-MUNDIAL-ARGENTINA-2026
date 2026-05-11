@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { createClient } from '../../utils/supabase/client';
 import DarkModeToggle from '../../components/DarkModeToggle';
+import UserMenu from '../../components/UserMenu';
 
 type SectorDB = {
   id: string;
@@ -114,122 +115,125 @@ function PaginaCompraContent() {
   };
 
   return (
-    <main className="main-compra">
-      <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '1rem' }}>
+    <>
+      <header className="header">
         <DarkModeToggle />
-      </div>
-      <h2 className="titulo">SELECCIONÁ TUS ENTRADAS</h2>
+        <UserMenu />
+      </header>
+      <main className="main-compra">
+        <h2 className="titulo">SELECCIONÁ TUS ENTRADAS</h2>
 
-      <div className="compra-container">
-        {mensaje ? (
-          <p className="compra-msg compra-msg--ok" role="status">
-            {mensaje}
-          </p>
-        ) : null}
+        <div className="compra-container">
+          {mensaje ? (
+            <p className="compra-msg compra-msg--ok" role="status">
+              {mensaje}
+            </p>
+          ) : null}
 
-        {error ? (
-          <p className="compra-msg compra-msg--error" role="alert">
-            {error}
-          </p>
-        ) : null}
+          {error ? (
+            <p className="compra-msg compra-msg--error" role="alert">
+              {error}
+            </p>
+          ) : null}
 
-        <div className="sector">
-          <label className="label-sector" htmlFor="sector">
-            Sector
-          </label>
-          {loadingSectores ? (
-            <p>Cargando sectores...</p>
-          ) : (
-            <select
-              id="sector"
-              className="selector-sector"
-              value={sectorSeleccionado?.id ?? ''}
-              onChange={(e) => {
-                const found = sectores.find((s) => s.id === e.target.value);
-                setSectorSeleccionado(found ?? null);
-              }}
-            >
-              {sectores.map((s) => (
-                <option key={s.id} value={s.id}>
-                  {s.nombre_sector}
-                </option>
-              ))}
-            </select>
-          )}
+          <div className="sector">
+            <label className="label-sector" htmlFor="sector">
+              Sector
+            </label>
+            {loadingSectores ? (
+              <p>Cargando sectores...</p>
+            ) : (
+              <select
+                id="sector"
+                className="selector-sector"
+                value={sectorSeleccionado?.id ?? ''}
+                onChange={(e) => {
+                  const found = sectores.find((s) => s.id === e.target.value);
+                  setSectorSeleccionado(found ?? null);
+                }}
+              >
+                {sectores.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.nombre_sector}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
+
+          <div className="box-precio">
+            <p className="label-precio">Precio por entrada</p>
+            <p className="precio">USD {sectorSeleccionado?.precio_sector ?? '—'}</p>
+          </div>
+
+          <div className="box-cantidad">
+            <p className="label-cantidad">Cantidad de entradas</p>
+            <div className="cantidad-container">
+              <button
+                type="button"
+                className="btn-cantidad"
+                onClick={() => {
+                  setCantidad(Math.max(1, cantidad - 1));
+                }}
+              >
+                −
+              </button>
+              <span className="cantidad-numero">{cantidad}</span>
+              <button
+                type="button"
+                className="btn-cantidad"
+                onClick={() => {
+                  setCantidad(Math.min(6, cantidad + 1));
+                }}
+              >
+                +
+              </button>
+            </div>
+          </div>
+
+          <div className="referencias">
+            <div className="referencia-box">
+              <span className="color-ref vip-color"></span>
+              <p>VIP</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref platea-color"></span>
+              <p>Platea</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref popular-color"></span>
+              <p>Popular</p>
+            </div>
+            <div className="referencia-box">
+              <span className="color-ref nodisponible-color"></span>
+              <p>No disponible</p>
+            </div>
+          </div>
+
+          <Image
+            className="img-estadio"
+            src="/estadio.png"
+            alt="Estadio"
+            width={900}
+            height={450}
+            priority
+          />
+
+          <button type="button" className="btn-continuar" onClick={onClickComprar} disabled={loading}>
+            {loading ? 'PROCESANDO...' : 'CONTINUAR →'}
+          </button>
+
+          <button
+            type="button"
+            className="btn-cancelar"
+            onClick={() => router.back()}
+            disabled={loading}
+          >
+            CANCELAR
+          </button>
         </div>
-
-        <div className="box-precio">
-          <p className="label-precio">Precio por entrada</p>
-          <p className="precio">USD {sectorSeleccionado?.precio_sector ?? '—'}</p>
-        </div>
-
-        <div className="box-cantidad">
-          <p className="label-cantidad">Cantidad de entradas</p>
-          <div className="cantidad-container">
-            <button
-              type="button"
-              className="btn-cantidad"
-              onClick={() => {
-                setCantidad(Math.max(1, cantidad - 1));
-              }}
-            >
-              −
-            </button>
-            <span className="cantidad-numero">{cantidad}</span>
-            <button
-              type="button"
-              className="btn-cantidad"
-              onClick={() => {
-                setCantidad(Math.min(6, cantidad + 1));
-              }}
-            >
-              +
-            </button>
-          </div>
-        </div>
-
-        <div className="referencias">
-          <div className="referencia-box">
-            <span className="color-ref vip-color"></span>
-            <p>VIP</p>
-          </div>
-          <div className="referencia-box">
-            <span className="color-ref platea-color"></span>
-            <p>Platea</p>
-          </div>
-          <div className="referencia-box">
-            <span className="color-ref popular-color"></span>
-            <p>Popular</p>
-          </div>
-          <div className="referencia-box">
-            <span className="color-ref nodisponible-color"></span>
-            <p>No disponible</p>
-          </div>
-        </div>
-
-        <Image
-          className="img-estadio"
-          src="/estadio.png"
-          alt="Estadio"
-          width={900}
-          height={450}
-          priority
-        />
-
-        <button type="button" className="btn-continuar" onClick={onClickComprar} disabled={loading}>
-          {loading ? 'PROCESANDO...' : 'CONTINUAR →'}
-        </button>
-
-        <button
-          type="button"
-          className="btn-cancelar"
-          onClick={() => router.back()}
-          disabled={loading}
-        >
-          CANCELAR
-        </button>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 
