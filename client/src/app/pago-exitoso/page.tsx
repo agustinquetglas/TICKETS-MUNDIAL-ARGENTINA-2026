@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 function PagoExitosoContent() {
     const searchParams = useSearchParams();
     const paymentId = searchParams.get('payment_id');
@@ -12,7 +14,7 @@ function PagoExitosoContent() {
     useEffect(() => {
         if (paymentId) {
             // Confirmamos el pago en el backend (ya que los webhooks no llegan a localhost)
-            fetch(`http://localhost:3001/tickets/confirmar/${paymentId}`)
+            fetch(`${API_URL}/tickets/confirmar/${paymentId}`)
                 .then(() => setConfirmando(false))
                 .catch((err) => {
                     console.error('Error al confirmar pago', err);

@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { createClient } from '../../../utils/supabase/client';
 import { QRCodeSVG } from 'qrcode.react';
 import Link from 'next/link';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export default function ComprobantePage() {
     const params = useParams();
@@ -35,7 +36,7 @@ export default function ComprobantePage() {
                     return;
                 }
 
-                const res = await fetch(`http://localhost:3001/tickets/mis-entradas/${user.id}`);
+                const res = await fetch(`${API_URL}/tickets/mis-entradas/${user.id}`);
                 if (!res.ok) throw new Error('Error al obtener el comprobante');
                 const data = await res.json();
                 

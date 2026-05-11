@@ -7,6 +7,8 @@ import { createClient } from '../../utils/supabase/client';
 
 type View = 'login' | 'register' | 'forgot';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 export default function PaginaLogin() {
   const [view, setView] = useState<View>('login');
   const [email, setEmail] = useState('');
@@ -67,7 +69,7 @@ export default function PaginaLogin() {
     setError('');
     setMensaje('');
 
-    const res = await fetch('http://localhost:3001/usuarios/login', {
+    const res = await fetch(`${API_URL}/usuarios/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -95,7 +97,7 @@ export default function PaginaLogin() {
     setError('');
     setMensaje('');
 
-    const res = await fetch('http://localhost:3001/usuarios/register', {
+    const res = await fetch(`${API_URL}/usuarios/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -122,7 +124,7 @@ export default function PaginaLogin() {
     setError('');
     setMensaje('');
 
-    const res = await fetch('http://localhost:3001/usuarios/forgot-password', {
+    const res = await fetch(`${API_URL}/usuarios/forgot-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),

@@ -14,6 +14,8 @@ type SectorDB = {
   partido_id: number;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 function PaginaCompraContent() {
   const [sectores, setSectores] = useState<SectorDB[]>([]);
   const [sectorSeleccionado, setSectorSeleccionado] = useState<SectorDB | null>(null);
@@ -42,7 +44,7 @@ function PaginaCompraContent() {
       return;
     }
     setLoadingSectores(true);
-    fetch(`http://127.0.0.1:3001/sectores/${partidoId}`)
+    fetch(`${API_URL}/sectores/${partidoId}`)
       .then((res) => res.json())
       .then((data: SectorDB[]) => {
         setSectores(data);
@@ -77,7 +79,7 @@ function PaginaCompraContent() {
       return;
     }
 
-    const response = await fetch('http://localhost:3001/tickets/comprar', {
+    const response = await fetch(`${API_URL}/tickets/comprar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

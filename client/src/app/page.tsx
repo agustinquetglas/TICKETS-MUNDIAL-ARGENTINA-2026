@@ -33,6 +33,7 @@ const getEstadio = (local: string, visitante: string) => {
     if (visitante === "JORDANIA") return "AT&T Stadium, Arlington";
   }
 };
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export default function Page() {
   const [partidos, setPartidos] = useState<Partido[]>([]);
@@ -43,7 +44,7 @@ export default function Page() {
   useEffect(() => {
     const fetchPartidos = async () => {
       try {
-        const res = await fetch('http://localhost:3001/partidos');
+        const res = await fetch(`${API_URL}/partidos`);
         if (!res.ok) throw new Error('Error al cargar partidos');
         const data = await res.json();
 
@@ -94,17 +95,17 @@ export default function Page() {
       </header>
 
       <main style={{ paddingBottom: '4rem' }}>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', paddingTop: '2rem', paddingBottom: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', paddingTop: '2rem', paddingBottom: '1rem' }}>
 
-        <h2 style={{ marginTop: '1.5rem', marginBottom: '0.4rem' }} className="text-2xl font-bold text-white tracking-widest uppercase">
-          Partidos Disponibles
-        </h2>
+          <h2 style={{ marginTop: '1.5rem', marginBottom: '0.4rem' }} className="text-2xl font-bold text-white tracking-widest uppercase">
+            Partidos Disponibles
+          </h2>
 
-        <span style={{ marginBottom: '1.5rem' }} className="text-sm font-black text-gray-400 tracking-[0.2em] uppercase">
-          [ Fase de Grupos ]
-        </span>
+          <span style={{ marginBottom: '1.5rem' }} className="text-sm font-black text-gray-400 tracking-[0.2em] uppercase">
+            [ Fase de Grupos ]
+          </span>
 
-      </div>
+        </div>
 
         {loading && (
           <p style={{ textAlign: "center", padding: "2rem" }}>
