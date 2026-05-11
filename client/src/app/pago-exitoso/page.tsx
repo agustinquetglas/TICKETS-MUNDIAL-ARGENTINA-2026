@@ -4,6 +4,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+
 function PagoExitosoContent() {
   const searchParams = useSearchParams();
   const paymentId = searchParams.get('payment_id');
@@ -12,7 +14,7 @@ function PagoExitosoContent() {
   useEffect(() => {
     if (!paymentId) return;
 
-    fetch(`http://127.0.0.1:3001/tickets/confirm/${paymentId}`, {
+    fetch(`${API_URL}/tickets/confirm/${paymentId}`, {
       method: 'POST',
     })
       .then(() => setConfirmado(true))
