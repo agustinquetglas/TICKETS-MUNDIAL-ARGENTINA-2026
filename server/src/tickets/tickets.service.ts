@@ -148,10 +148,10 @@ export class TicketsService {
 
             for (const pedido of pendientes) {
                 const result = await paymentClient.search({
-                options: {
-                    external_reference: String(pedido.id)
-                }
-            }); 
+                    options: {
+                        external_reference: String(pedido.id)
+                    }
+                });
 
                 console.log('RESULTADO MP:', JSON.stringify(result, null, 2));
 

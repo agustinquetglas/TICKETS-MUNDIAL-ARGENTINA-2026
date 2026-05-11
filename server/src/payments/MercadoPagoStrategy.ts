@@ -10,11 +10,12 @@ export class MercadoPagoStrategy implements PaymentStrategy {
 
         const preference = new Preference(client);
 
-        try {
+        // Definimos la URL base (Vercel en producción, localhost en desarrollo)
+        const BASE_URL = 'https://tickets-mundial-argentina-2026.vercel.app';
 
+        try {
             const result = await preference.create({
                 body: {
-
                     items: [
                         {
                             id: ticketData.productoId || 'ticket-mundial-2026',
@@ -27,14 +28,13 @@ export class MercadoPagoStrategy implements PaymentStrategy {
 
                     external_reference: String(ticketData.compraId || 'pedido-prueba'),
 
+                    // Actualización de URLs de retorno a producción
                     back_urls: {
-                        success: 'http://localhost:3000/pago-exitoso',
-                        failure: 'http://localhost:3000/pago-fallido',
-                        pending: 'http://localhost:3000/pago-pendiente'
-                    }
-                    /*
-                    notification_url: 'http://localhost:3001/tickets/webhook/mercadopago'
-                    */
+                        success: `${BASE_URL}/pago-exitoso`,
+                        failure: `${BASE_URL}/pago-fallido`,
+                        pending: `${BASE_URL}/pago-pendiente`
+                    },
+                    auto_return: 'approved', // Esto hace que Mercado Pago redirija automáticamente al usuario al terminar
                 }
             });
 
@@ -42,7 +42,7 @@ export class MercadoPagoStrategy implements PaymentStrategy {
 
         } catch (error) {
             console.error('Error al crear la preferencia en Mercado Pago:', error);
-            throw new Error('No se pudo procesar el pago del ticket');
+            throw new Error('No se pudo processar el pago del ticket');
         }
     }
 }
