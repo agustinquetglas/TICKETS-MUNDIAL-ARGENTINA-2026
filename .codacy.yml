@@ -2,3 +2,4 @@ exclude_paths:
   - "client/src/app/**"
   - "client/src/components/**"
   - "server/test-buy.js"
+  - "client/package-lock.json"
