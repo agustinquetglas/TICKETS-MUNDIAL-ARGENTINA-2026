@@ -132,10 +132,12 @@ export class TicketsService {
 
             for (const pedido of pendientes) {
                 const result = await paymentClient.search({
-                    options: {
-                        external_reference: pedido.id
-                    }
-                });
+                options: {
+                    external_reference: String(pedido.id)
+                }
+            }); 
+
+                console.log('RESULTADO MP:', JSON.stringify(result, null, 2));
 
                 if (result.results && result.results.length > 0) {
                     const pagosAprobados = result.results.filter((p: any) => p.status === 'approved');
