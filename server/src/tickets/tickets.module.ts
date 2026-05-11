@@ -5,9 +5,10 @@ import { PedidosRepository } from './pedidos.repository';
 import { TicketsRepository } from './tickets.repository';
 import { PartidosModule } from '../partidos/partidos.module';
 import { SectorModule } from '../sector/sector.module';
+import { UsuariosModule } from '../usuarios/usuarios.module';
 
 @Module({
-    imports: [PartidosModule, SectorModule],
+    imports: [PartidosModule, SectorModule, UsuariosModule],
     controllers: [TicketsController],
     providers: [TicketsService, PedidosRepository, TicketsRepository]
 })

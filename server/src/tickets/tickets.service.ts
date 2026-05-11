@@ -3,6 +3,7 @@ import { PartidosRepository } from '../partidos/partidos.repository';
 import { PedidosRepository } from './pedidos.repository';
 import { TicketsRepository } from './tickets.repository';
 import { SectorRepository } from '../sector/sector.repository';
+import { UsuariosRepository } from '../usuarios/usuarios.repository';
 import { MercadoPagoStrategy } from '../payments/MercadoPagoStrategy';
 import { PaymentProcessor } from '../payments/PaymentProcessor';
 
@@ -13,6 +14,7 @@ export class TicketsService {
         private readonly pedidosRepo: PedidosRepository,
         private readonly ticketsRepo: TicketsRepository,
         private readonly sectorRepo: SectorRepository,
+        private readonly usuariosRepo: UsuariosRepository,
     ) { }
 
     async procesarCompra(partidoId: number, usuarioId: string, cantidadAComprar: number, sectorId: string) {
@@ -40,6 +42,19 @@ export class TicketsService {
         }
 
         const montoTotal = sector.precio_sector * cantidadAComprar;
+
+        // Validación de Saldo
+        const usuario = await this.usuariosRepo.obtenerUsuarioPorId(usuarioId);
+        if (!usuario) {
+            throw new BadRequestException('Usuario no encontrado.');
+        }
+
+        // Si la columna Saldo existe, validamos. Si no existe (undefined/null), asumimos que no tiene saldo suficiente para comprar
+        // o que la tabla no está preparada, pero por requerimiento "si no le alcanza la plata que no te deje"
+        const saldoUsuario = usuario.Saldo !== undefined ? usuario.Saldo : 0;
+        if (saldoUsuario < montoTotal) {
+            throw new BadRequestException(`Saldo insuficiente. Tu saldo actual es de USD ${saldoUsuario} y el total es USD ${montoTotal}.`);
+        }
 
         try {
             const nuevoPedido = await this.pedidosRepo.crearPedido({

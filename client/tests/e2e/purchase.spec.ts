@@ -119,7 +119,7 @@ test.describe('Flujo de Compra de Entradas', () => {
     expect(page.url()).toContain('mercadopago.com');
   });
 
-  test('debería mostrar error cuando el backend falla', async ({ page }) => {
+  test('no debería permitir la compra si no hay stock', async ({ page }) => {
     await page.route('**/tickets/comprar', async route => {
       await route.fulfill({
         status: 400,
@@ -135,6 +135,24 @@ test.describe('Flujo de Compra de Entradas', () => {
 
     await expect(page.locator('.compra-msg--error')).toBeVisible({ timeout: 5000 });
     await expect(page.locator('.compra-msg--error')).toContainText('Stock insuficiente');
+  });
+
+  test('no debería permitir la compra si el usuario no tiene suficiente saldo', async ({ page }) => {
+    await page.route('**/tickets/comprar', async route => {
+      await route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({ message: 'Saldo insuficiente. Tu saldo actual es de USD 100 y el total es USD 300.' }),
+      });
+    });
+
+    await page.goto('/entradas?partido_id=1');
+    await page.waitForLoadState('networkidle');
+
+    await page.click('button:has-text("CONTINUAR")');
+
+    await expect(page.locator('.compra-msg--error')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('.compra-msg--error')).toContainText('Saldo insuficiente');
   });
 
   test('debería redirigir al login si el usuario no está autenticado', async ({ page }) => {
